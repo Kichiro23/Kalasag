@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard/
+Disallow: /login
+Disallow: /intervention
+
+Sitemap: https://kalasag.vercel.app/sitemap.xml
