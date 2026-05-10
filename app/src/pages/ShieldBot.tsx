@@ -1,203 +1,241 @@
 import { useState, useRef, useEffect } from 'react'
-import { useNavigate } from 'react-router'
-import { motion } from 'framer-motion'
-import { ArrowLeft, Send, Bot, User, Shield } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Send, Bot, User, Sparkles, AlertTriangle, RotateCcw, Phone } from 'lucide-react'
 import DashboardLayout from '@/components/dashboard/DashboardLayout'
 
 interface Message {
   id: string
-  role: 'bot' | 'user'
-  content: string
-  type?: 'text' | 'slider' | 'scale'
+  role: 'user' | 'bot'
+  text: string
+  timestamp: Date
 }
 
-const initialMessages: Message[] = [
-  {
-    id: '1',
-    role: 'bot',
-    content: "Kamusta! I'm Shield Bot, your CBT companion. I'm here to help you work through thoughts and urges using proven techniques.\n\nHow are you feeling right now?",
-  },
+const QUICK_REPLIES = [
+  "I'm having an urge right now",
+  "I relapsed today",
+  "I feel depressed",
+  "Give me a CBT exercise",
+  "I need motivation",
 ]
 
-const cbtFlows: Record<string, Message[]> = {
-  anxious: [
-    { id: 'a1', role: 'bot', content: 'I hear you. Anxiety is a common trigger for gambling urges. Let\'s work through this together.\n\nOn a scale of 1-10, how intense is your anxiety right now?' },
-    { id: 'a2', role: 'bot', content: 'Thank you for sharing. Now, let\'s identify what triggered this anxiety. What situation or thought started it?' },
-    { id: 'a3', role: 'bot', content: 'That makes sense. Now let\'s challenge that thought together.\n\nIs this thought based on facts, or is it an assumption?' },
-    { id: 'a4', role: 'bot', content: 'Excellent work! You\'re practicing CBT right now. Remember: thoughts are not facts.\n\nLet\'s reframe: instead of "I need to gamble to feel better," try "This feeling will pass. I have other ways to cope."' },
-    { id: 'a5', role: 'bot', content: 'You\'re doing great! Would you like to try a breathing exercise or play a game in the Urge Arcade?' },
-  ],
-  urge: [
-    { id: 'u1', role: 'bot', content: 'I understand. The urge feels strong right now. But remember: urges are temporary. They peak and then fade.\n\nLet\'s use the STOP technique:\n\nS - Stop what you\'re doing\nT - Take a breath\nO - Observe your thoughts\nP - Proceed with a different action' },
-    { id: 'u2', role: 'bot', content: 'Good! Now let\'s delay. Can you commit to waiting just 10 minutes before making any decision? Set a timer now.' },
-    { id: 'u3', role: 'bot', content: 'Those 10 minutes are your superpower. During this time, let\'s do something else.\n\nWhat\'s one thing you enjoy that doesn\'t involve gambling?' },
-    { id: 'u4', role: 'bot', content: 'Perfect choice! Every minute you wait, the urge gets weaker. You\'re stronger than you think.\n\nRemember your "why" - why did you start this recovery journey?' },
-  ],
-  sad: [
-    { id: 's1', role: 'bot', content: 'I\'m sorry you\'re feeling sad. It\'s okay to feel this way. Sadness is a normal emotion.\n\nSometimes gambling seems like an escape from sadness, but it actually makes things worse in the long run.' },
-    { id: 's2', role: 'bot', content: 'Let\'s practice self-compassion. Would you talk to a friend the way you talk to yourself?\n\nTry this: place a hand on your heart and say "This is hard, and I\'m doing my best."' },
-    { id: 's3', role: 'bot', content: 'You deserve kindness, especially from yourself.\n\nCan you think of one small thing that brought you joy this week, no matter how small?' },
-  ],
+// Pattern-based AI responses (frontend-only, no backend needed)
+function getAIResponse(input: string): string {
+  const lower = input.toLowerCase()
+
+  if (/urge|want to gamble|craving|tempted|itching/i.test(lower)) {
+    return "I hear you — urges are intense but they pass. Let's try the 5-minute rule: wait just 5 minutes before acting. Most urges peak and fade within 15-30 minutes. While you wait, try this breathing exercise: inhale for 4 seconds, hold for 7, exhale for 8. Repeat 5 times. You've got this."
+  }
+
+  if (/relapse|slipped|gambled again|lost money again/i.test(lower)) {
+    return "Relapse is not failure — it's part of recovery for 90% of people. The key is what you do next. One gambling session doesn't erase all your progress. Take a deep breath, remove yourself from the gambling environment, and review your trigger map. What led to this moment? Write it down. Then start again — right now."
+  }
+
+  if (/depress|sad|hopeless|empty|suicide|kill myself/i.test(lower)) {
+    if (/suicide|kill myself/i.test(lower)) {
+      return "I'm really concerned about what you're sharing. Your life matters. Please reach out to a crisis helpline right now: DOH 1553 or NCMH 0966-351-4518. You are not alone, and help is available 24/7."
+    }
+    return "Depression and gambling addiction often go hand in hand — many people gamble to escape emotional pain. But there's a healthier path. Consider speaking with a mental health professional. In the meantime, try the 'opposite action' technique: when you feel like withdrawing, do something social. When you feel like staying in bed, take a short walk. Small actions can shift your mood."
+  }
+
+  if (/cbt|exercise|technique|tool|help me now/i.test(lower)) {
+    return "Here's a quick CBT exercise — the STOP technique:\n\n**S** — Stop what you're doing\n**T** — Take a breath (4-7-8 breathing)\n**O** — Observe your thoughts (What am I thinking? Is it realistic?)\n**P** — Proceed with a different action (call a friend, go for a walk, open Kalasag games)\n\nWrite down what you observed. This builds awareness of your thought patterns."
+  }
+
+  if (/motivat|encourag|inspir|strength/i.test(lower)) {
+    return "You are stronger than you think. Every day you resist gambling, you're rewiring your brain. Recovery is not linear — there will be ups and downs. But the trend matters, not individual days. Remember why you started: your future self is thanking you right now. Keep going."
+  }
+
+  if (/debt|money|financ|broke|cant pay/i.test(lower)) {
+    return "Financial recovery is possible, but it takes time and a plan. First, stop the bleeding — no more gambling, no matter what. Second, list all debts from smallest to largest. Third, contact your creditors and explain your situation — many offer hardship programs. Fourth, consider a nonprofit credit counseling agency. You can rebuild. One step at a time."
+  }
+
+  if (/family|wife|husband|partner|parent|child|mom|dad/i.test(lower)) {
+    return "Relationships are often the biggest casualty of gambling addiction — but they can also be the biggest motivator for recovery. Honesty is the foundation. If you haven't already, consider having an open conversation using 'I' statements: 'I feel guilty about my gambling, and I want to change.' Trust is rebuilt one day at a time."
+  }
+
+  if (/block|stop|blocker|software|app|ban/i.test(lower)) {
+    return "Blocking software is one of the most effective tools. Here are the top options:\n\n1. **BetBlocker** — FREE, blocks 327,500+ sites\n2. **Gamban** — FREE via GamCare, 99% effectiveness\n3. **GamBlock** — ~₱600/mo, survives factory resets\n4. **Freedom** — Subscription, multi-device\n\nInstall at least one TODAY. Remove the ability to gamble, and the urge becomes manageable."
+  }
+
+  if (/hello|hi|hey|good morning|good afternoon/i.test(lower)) {
+    return "Hello! I'm your recovery assistant. I'm here to help with urges, provide CBT exercises, offer motivation, or just listen. What would you like to talk about today?"
+  }
+
+  if (/thank/i.test(lower)) {
+    return "You're very welcome. Remember, reaching out for help is a sign of strength, not weakness. I'm here whenever you need me. Take care of yourself."
+  }
+
+  // Default fallback
+  return "Thank you for sharing that with me. Recovery is a journey, and every conversation is a step forward. Would you like me to suggest a CBT exercise, help with an urge, or just listen? You can also try the quick-reply buttons below."
 }
 
 export default function ShieldBot() {
-  const navigate = useNavigate()
-  const [messages, setMessages] = useState<Message[]>(initialMessages)
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: 'welcome',
+      role: 'bot',
+      text: "Hello, I'm your recovery assistant. I'm trained in CBT and Motivational Interviewing. I'm here 24/7 to help you through urges, provide exercises, or just listen. What's on your mind?",
+      timestamp: new Date(),
+    },
+  ])
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
-  const [flowIndex, setFlowIndex] = useState(0)
-  const [currentFlow, setCurrentFlow] = useState<string | null>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' })
   }, [messages, isTyping])
 
-  const detectFlow = (text: string): string | null => {
-    const lower = text.toLowerCase()
-    if (lower.includes('anxious') || lower.includes('worried') || lower.includes('nervous')) return 'anxious'
-    if (lower.includes('urge') || lower.includes('gamble') || lower.includes('bet') || lower.includes('taya')) return 'urge'
-    if (lower.includes('sad') || lower.includes('depress') || lower.includes('lonely') || lower.includes('lungkot')) return 'sad'
-    return null
-  }
+  const sendMessage = (text: string) => {
+    if (!text.trim()) return
 
-  const addBotMessage = (msg: Message) => {
-    setIsTyping(true)
-    setTimeout(() => {
-      setMessages(prev => [...prev, msg])
-      setIsTyping(false)
-    }, 1500)
-  }
-
-  const handleSend = () => {
-    if (!input.trim()) return
-    const userMsg: Message = { id: Date.now().toString(), role: 'user', content: input }
-    setMessages(prev => [...prev, userMsg])
-
-    const flow = detectFlow(input)
-    if (flow && flow !== currentFlow) {
-      setCurrentFlow(flow)
-      setFlowIndex(0)
-      const flowMessages = cbtFlows[flow]
-      if (flowMessages && flowMessages.length > 0) {
-        addBotMessage(flowMessages[0])
-      }
-    } else if (currentFlow) {
-      const flowMessages = cbtFlows[currentFlow]
-      if (flowMessages && flowIndex < flowMessages.length - 1) {
-        const nextIndex = flowIndex + 1
-        setFlowIndex(nextIndex)
-        addBotMessage(flowMessages[nextIndex])
-      } else {
-        addBotMessage({
-          id: Date.now().toString(),
-          role: 'bot',
-          content: "You're doing amazing work right now. Remember, recovery is a journey, not a destination. Every step counts!\n\nIs there anything else you'd like to talk about?",
-        })
-      }
-    } else {
-      addBotMessage({
-        id: Date.now().toString(),
-        role: 'bot',
-        content: "Thank you for sharing that with me. I'm here to support you through this journey.\n\nWould you like to try a CBT exercise, or is there something specific on your mind?",
-      })
+    const userMsg: Message = {
+      id: Date.now().toString(),
+      role: 'user',
+      text,
+      timestamp: new Date(),
     }
 
+    setMessages(prev => [...prev, userMsg])
     setInput('')
+    setIsTyping(true)
+
+    // Simulate AI thinking time
+    setTimeout(() => {
+      const response = getAIResponse(text)
+      const botMsg: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'bot',
+        text: response,
+        timestamp: new Date(),
+      }
+      setMessages(prev => [...prev, botMsg])
+      setIsTyping(false)
+    }, 800 + Math.random() * 600)
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    sendMessage(input)
+  }
+
+  const resetChat = () => {
+    setMessages([{
+      id: 'welcome',
+      role: 'bot',
+      text: "Hello, I'm your recovery assistant. I'm trained in CBT and Motivational Interviewing. I'm here 24/7 to help you through urges, provide exercises, or just listen. What's on your mind?",
+      timestamp: new Date(),
+    }])
   }
 
   return (
     <DashboardLayout showNav={false}>
-      <div className="flex flex-col h-[calc(100vh-48px)]">
+      <div className="h-[calc(100vh-160px)] flex flex-col">
         {/* Header */}
-        <div className="flex items-center gap-3 pb-4 shrink-0">
-          <button onClick={() => navigate('/dashboard')} className="w-10 h-10 rounded-full dash-card flex items-center justify-center dash-interactive">
-            <ArrowLeft size={20} style={{ color: 'var(--text-primary)' }} />
-          </button>
-          <div className="w-10 h-10 rounded-full dash-card flex items-center justify-center">
-            <Shield size={20} className="text-[var(--accent-teal)]" />
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-[var(--accent-teal)]/10 flex items-center justify-center">
+              <Sparkles className="w-5 h-5 text-[var(--accent-teal)]" />
+            </div>
+            <div>
+              <h1 className="text-lg font-bold text-[var(--text-primary)]">Recovery Assistant</h1>
+              <p className="text-xs text-[var(--text-muted)]">CBT-powered · Anonymous · 24/7</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-[17px] font-semibold" style={{ color: 'var(--text-primary)' }}>Shield Bot</h1>
-            <p className="text-[12px]" style={{ color: 'var(--text-muted)' }}>CBT Companion</p>
+          <div className="flex items-center gap-2">
+            <button onClick={resetChat} className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-[var(--bg-surface-solid)] transition-colors" title="Reset chat">
+              <RotateCcw className="w-4 h-4 text-[var(--text-muted)]" />
+            </button>
+            <a href="tel:1553" className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-red-500/10 transition-colors" title="Crisis hotline">
+              <Phone className="w-4 h-4 text-red-400" />
+            </a>
           </div>
         </div>
 
         {/* Messages */}
-        <div ref={scrollRef} className="flex-1 overflow-y-auto pb-4 -mx-5 px-5">
-          {messages.map((msg, i) => (
-            <motion.div
-              key={msg.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: i * 0.05 }}
-              className={`flex gap-3 mb-4 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-            >
-              {msg.role === 'bot' && (
-                <div className="w-8 h-8 rounded-full dash-card flex items-center justify-center shrink-0 self-start">
-                  <Bot size={16} className="text-[var(--accent-teal)]" />
-                </div>
-              )}
-              <div
-                className={`max-w-[75%] rounded-2xl px-4 py-3 ${
-                  msg.role === 'user'
-                    ? 'bg-[var(--accent-teal)] text-white rounded-br-md'
-                    : 'dash-card rounded-bl-md'
-                }`}
+        <div ref={scrollRef} className="flex-1 overflow-y-auto space-y-4 pr-1 pb-4">
+          <AnimatePresence>
+            {messages.map((msg) => (
+              <motion.div
+                key={msg.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}
               >
-                <p className="text-[15px] whitespace-pre-line leading-relaxed" style={{ color: msg.role === 'user' ? 'white' : 'var(--text-secondary)' }}>
-                  {msg.content}
-                </p>
-              </div>
-              {msg.role === 'user' && (
-                <div className="w-8 h-8 rounded-full bg-[var(--accent-teal)] flex items-center justify-center shrink-0 self-start">
-                  <User size={16} className="text-white" />
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                  msg.role === 'bot' ? 'bg-[var(--accent-teal)]/10' : 'bg-[var(--bg-surface-solid)]'
+                }`}>
+                  {msg.role === 'bot' ? <Bot className="w-4 h-4 text-[var(--accent-teal)]" /> : <User className="w-4 h-4 text-[var(--text-muted)]" />}
                 </div>
-              )}
-            </motion.div>
-          ))}
-
-          {isTyping && (
-            <div className="flex gap-3 mb-4">
-              <div className="w-8 h-8 rounded-full dash-card flex items-center justify-center">
-                <Bot size={16} className="text-[var(--accent-teal)]" />
-              </div>
-              <div className="dash-card rounded-2xl rounded-bl-md px-4 py-3">
-                <div className="flex gap-1">
-                  {[0, 1, 2].map(i => (
-                    <motion.div
-                      key={i}
-                      animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
-                      transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
-                      className="w-2 h-2 rounded-full bg-[var(--accent-teal)]"
-                    />
+                <div className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                  msg.role === 'bot'
+                    ? 'bg-[var(--bg-surface-solid)] border border-[var(--border-subtle)] text-[var(--text-primary)]'
+                    : 'bg-[var(--accent-teal)] text-white'
+                }`}>
+                  {msg.text.split('\n').map((line, i) => (
+                    <span key={i}>
+                      {line.includes('**') ? (
+                        <span dangerouslySetInnerHTML={{ __html: line.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') }} />
+                      ) : line}
+                      {i < msg.text.split('\n').length - 1 && <br />}
+                    </span>
                   ))}
                 </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+
+          {isTyping && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3">
+              <div className="w-8 h-8 rounded-full bg-[var(--accent-teal)]/10 flex items-center justify-center shrink-0">
+                <Bot className="w-4 h-4 text-[var(--accent-teal)]" />
               </div>
-            </div>
+              <div className="bg-[var(--bg-surface-solid)] border border-[var(--border-subtle)] rounded-2xl px-4 py-3">
+                <div className="flex gap-1">
+                  <span className="w-2 h-2 rounded-full bg-[var(--text-muted)] animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-2 h-2 rounded-full bg-[var(--text-muted)] animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-2 h-2 rounded-full bg-[var(--text-muted)] animate-bounce" style={{ animationDelay: '300ms' }} />
+                </div>
+              </div>
+            </motion.div>
           )}
         </div>
 
-        {/* Input */}
-        <div className="shrink-0 pb-4 pt-2 -mx-5 px-5">
-          <div className="dash-card rounded-full px-4 py-2 flex items-center gap-3">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-              placeholder="Type your thoughts..."
-              className="flex-1 bg-transparent text-[15px] outline-none placeholder:text-[var(--text-muted)]"
-              style={{ color: 'var(--text-primary)' }}
-            />
+        {/* Quick Replies */}
+        <div className="flex gap-2 overflow-x-auto pb-2 mb-2">
+          {QUICK_REPLIES.map((reply) => (
             <button
-              onClick={handleSend}
-              className="w-10 h-10 rounded-full bg-[var(--accent-teal)] flex items-center justify-center shrink-0 dash-interactive"
+              key={reply}
+              onClick={() => sendMessage(reply)}
+              className="px-3 py-1.5 rounded-full text-[11px] font-medium bg-[var(--bg-surface-solid)] border border-[var(--border-subtle)] text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[var(--accent-teal)] transition-colors whitespace-nowrap"
             >
-              <Send size={18} className="text-white" />
+              {reply}
             </button>
-          </div>
+          ))}
         </div>
+
+        {/* Input */}
+        <form onSubmit={handleSubmit} className="flex items-center gap-2">
+          <input
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Type your message..."
+            className="flex-1 glass-input rounded-full h-11 px-4 text-sm text-[var(--text-primary)]"
+          />
+          <button
+            type="submit"
+            disabled={!input.trim() || isTyping}
+            className="w-11 h-11 rounded-full bg-[var(--accent-teal)] flex items-center justify-center text-white hover:opacity-90 transition-opacity disabled:opacity-40"
+          >
+            <Send className="w-4 h-4" />
+          </button>
+        </form>
+
+        {/* Disclaimer */}
+        <p className="text-[10px] text-[var(--text-muted)] text-center mt-2">
+          This is an AI assistant, not a substitute for professional help. If you're in crisis, call 1553.
+        </p>
       </div>
     </DashboardLayout>
   )

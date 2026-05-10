@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Bell, CheckCircle, BookOpen, Users, Shield, Sparkles } from 'lucide-react';
+import { Mail, Bell, CheckCircle, BookOpen, Users, Shield, Sparkles, ArrowRight, Check } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import { useLanguage } from '@/providers/LanguageProvider';
 import { content } from '@/i18n/content';
@@ -8,10 +8,40 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 
 const featureIcons = [BookOpen, Sparkles, Users, Shield];
 
+const tiers = [
+  {
+    name: 'Free',
+    price: '₱0',
+    period: 'forever',
+    description: 'Access to core recovery tools and community.',
+    features: ['Streak tracker', 'Mood journal', 'Basic analytics', 'Community stories', 'Crisis hotlines', 'Self-exclusion guide'],
+    cta: 'Get Started',
+    highlighted: false,
+  },
+  {
+    name: 'Premium',
+    price: '₱499',
+    period: 'one-time payment',
+    description: 'Unlock everything. Lifetime access. No subscriptions.',
+    features: ['All free features', 'Advanced analytics & charts', 'AI recovery assistant', 'Financial tracker', 'Urge-stopping games', 'Priority crisis support', 'Downloadable reports', 'Lifetime updates'],
+    cta: 'Unlock Premium',
+    highlighted: true,
+  },
+  {
+    name: 'Supporter',
+    price: '₱999',
+    period: 'one-time payment',
+    description: 'Premium + direct support from the developer.',
+    features: ['All Premium features', 'Priority email support', 'Feature request voting', 'Early access to new tools', 'Personal thank-you note'],
+    cta: 'Become a Supporter',
+    highlighted: false,
+  },
+];
+
 export default function SubscribePage() {
   const { lang } = useLanguage();
   const t = content[lang];
-  usePageTitle(lang === 'fil' ? 'Mag-subscribe' : 'Subscribe');
+  usePageTitle('Subscribe');
 
   const [email, setEmail] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -20,7 +50,6 @@ export default function SubscribePage() {
     e.preventDefault();
     if (!email.trim()) return;
     setStatus('loading');
-    // Simulate API call
     setTimeout(() => {
       setStatus('success');
       setEmail('');
@@ -30,45 +59,66 @@ export default function SubscribePage() {
   return (
     <Layout>
       {/* Hero */}
-      <section className="px-4 sm:px-6 lg:px-8 pt-8 pb-12 md:pt-12 md:pb-16">
+      <section className="px-4 sm:px-6 lg:px-8 pt-8 pb-12 md:pt-16 md:pb-20">
         <div className="max-w-[1200px] mx-auto text-center">
-          <motion.span
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="section-eyebrow block mb-4"
-          >
+          <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }} className="section-eyebrow block mb-4">
             {t.subscribe.hero.eyebrow}
           </motion.span>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-[var(--text-primary)] mb-6 text-balance"
-          >
+          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight text-[var(--text-primary)] mb-6 text-balance">
             {t.subscribe.hero.title}
           </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="text-base md:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed"
-          >
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }} className="text-base md:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
             {t.subscribe.hero.description}
           </motion.p>
         </div>
       </section>
 
-      {/* Subscribe Form */}
+      {/* Pricing Tiers */}
+      <section className="px-4 sm:px-6 lg:px-8 py-4">
+        <div className="max-w-[1000px] mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {tiers.map((tier, i) => (
+              <motion.div
+                key={tier.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className={`glass-card rounded-3xl p-6 md:p-8 flex flex-col ${tier.highlighted ? 'border-[var(--accent-teal)]/40 ring-1 ring-[var(--accent-teal)]/20' : ''}`}
+              >
+                <div className="mb-4">
+                  <h3 className="text-lg font-bold text-[var(--text-primary)]">{tier.name}</h3>
+                  <div className="flex items-baseline gap-1 mt-1">
+                    <span className="text-3xl font-extrabold text-[var(--text-primary)]">{tier.price}</span>
+                    <span className="text-xs text-[var(--text-muted)]">{tier.period}</span>
+                  </div>
+                  <p className="text-xs text-[var(--text-secondary)] mt-2">{tier.description}</p>
+                </div>
+                <ul className="space-y-2 mb-6 flex-1">
+                  {tier.features.map((f) => (
+                    <li key={f} className="flex items-start gap-2 text-xs text-[var(--text-secondary)]">
+                      <Check className="w-3.5 h-3.5 text-[var(--accent-teal)] shrink-0 mt-0.5" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <button className={`w-full h-10 rounded-xl text-sm font-medium transition-colors ${
+                  tier.highlighted
+                    ? 'bg-[var(--accent-teal)] text-white hover:opacity-90'
+                    : 'border border-[var(--border-subtle)] text-[var(--text-primary)] hover:border-[var(--accent-teal)] hover:text-[var(--accent-teal)]'
+                }`}>
+                  {tier.cta}
+                </button>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Newsletter */}
       <section className="px-4 sm:px-6 lg:px-8 py-4">
         <div className="max-w-[600px] mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="glass-card rounded-3xl p-8 md:p-10"
-          >
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="glass-card rounded-3xl p-8 md:p-10">
             {status === 'success' ? (
               <div className="text-center py-8">
                 <CheckCircle className="w-14 h-14 text-green-500 mx-auto mb-4" />
@@ -77,28 +127,15 @@ export default function SubscribePage() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
+                <h3 className="text-lg font-bold text-[var(--text-primary)] text-center mb-2">Newsletter</h3>
                 <div className="relative">
                   <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)]" />
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder={t.subscribe.form.placeholder}
-                    className="w-full glass-input rounded-xl h-14 pl-12 pr-4 text-sm text-[var(--text-primary)]"
-                    required
-                  />
+                  <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t.subscribe.form.placeholder} className="w-full glass-input rounded-xl h-14 pl-12 pr-4 text-sm text-[var(--text-primary)]" required />
                 </div>
-                <button
-                  type="submit"
-                  disabled={status === 'loading'}
-                  className="btn-primary w-full h-12 inline-flex items-center justify-center gap-2 text-sm disabled:opacity-60"
-                >
+                <button type="submit" disabled={status === 'loading'} className="btn-primary w-full h-12 inline-flex items-center justify-center gap-2 text-sm disabled:opacity-60">
                   <Bell className="w-4 h-4" />
                   {status === 'loading' ? t.subscribe.form.subscribing : t.subscribe.form.button}
                 </button>
-                {status === 'error' && (
-                  <p className="text-sm text-red-500 text-center">{t.subscribe.form.error}</p>
-                )}
                 <p className="text-xs text-[var(--text-muted)] text-center">{t.subscribe.privacy}</p>
               </form>
             )}
@@ -107,32 +144,19 @@ export default function SubscribePage() {
       </section>
 
       {/* Features */}
-      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12 pb-12 md:pb-20">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12 pb-20 md:pb-28">
         <div className="max-w-[800px] mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="grid grid-cols-2 gap-4"
-          >
+          <div className="grid grid-cols-2 gap-4">
             {t.subscribe.features.map((feature, i) => {
               const Icon = featureIcons[i] || Bell;
               return (
-                <motion.div
-                  key={feature}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
-                  className="glass-card rounded-2xl p-5 text-center dash-interactive"
-                >
+                <motion.div key={feature} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: i * 0.1 }} className="glass-card rounded-2xl p-5 text-center dash-interactive">
                   <Icon className="w-6 h-6 text-[var(--accent-teal)] mx-auto mb-2" />
                   <span className="text-sm font-medium text-[var(--text-primary)]">{feature}</span>
                 </motion.div>
               );
             })}
-          </motion.div>
+          </div>
         </div>
       </section>
     </Layout>

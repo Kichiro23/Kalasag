@@ -98,7 +98,6 @@ export default function AboutPage() {
                   <p className="text-sm text-[var(--accent-teal)] mt-1">{t.about.story.role}</p>
                   <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 mt-3 text-xs text-[var(--text-muted)]">
                     <span className="flex items-center gap-1"><Clock size={12} /> {t.about.story.experience}</span>
-                    <span className="flex items-center gap-1"><MapPin size={12} /> {t.about.story.location}</span>
                   </div>
                 </div>
 

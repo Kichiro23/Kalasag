@@ -352,7 +352,7 @@ export default function StoriesPage() {
       </AnimatePresence>
 
       {/* Stories Grid */}
-      <section className="px-4 sm:px-6 lg:px-8 pb-12 md:pb-20">
+      <section className="px-4 sm:px-6 lg:px-8 pb-20 md:pb-32">
         <div className="max-w-[1200px] mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filtered.map((story, i) => (
@@ -394,7 +394,7 @@ export default function StoriesPage() {
       {/* Story Detail Modal */}
       <AnimatePresence>
         {selectedStory && (
-          <div className="fixed inset-0 z-[90] flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setSelectedStory(null)} />
             <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="relative w-full max-w-2xl glass-panel rounded-3xl p-6 md:p-8 max-h-[85vh] overflow-y-auto">
               <div className="flex items-center justify-between mb-4">
@@ -428,7 +428,7 @@ export default function StoriesPage() {
 
       {/* Story Form Modal */}
       {showForm && (
-        <div className="fixed inset-0 z-[90] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowForm(false)} />
           <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="relative w-full max-w-lg glass-panel rounded-3xl p-6 md:p-8 max-h-[90vh] overflow-y-auto">
             <div className="flex items-center justify-between mb-6">

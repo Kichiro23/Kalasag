@@ -20,7 +20,7 @@ export default function Layout({ children }: LayoutProps) {
       </a>
       <AnimatedBackground />
       <Navbar />
-      <main id="main-content" className="relative z-10 flex-1 pt-24">
+      <main id="main-content" className="relative z-10 flex-1 pt-24 pb-20">
         {children}
       </main>
       <Footer />
