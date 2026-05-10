@@ -1,5 +1,5 @@
-import { getDb } from "../api/queries/connection";
-import { recoveryContent } from "./schema";
+import { getDb } from "../api/queries/connection.js";
+import { recoveryContent } from "./schema.js";
 
 async function seed() {
   const db = getDb();

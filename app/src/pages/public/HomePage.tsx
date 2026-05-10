@@ -10,6 +10,13 @@ import {
   ArrowRight,
   Check,
   ChevronRight,
+  Lock,
+  Zap,
+  BarChart3,
+  Gamepad2,
+  Globe,
+  FileText,
+  Sparkles,
 } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import SectionHeading from '@/components/primitives/SectionHeading';
@@ -30,10 +37,10 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
 };
 
 function StatCounter({ value, label }: { value: string; label: string }) {
-  const numericMatch = value.replace(/,/g, '').match(/^(\d+)/);
+  const numericMatch = value.replace(/,/g, '').replace(/\./g, '').match(/^(\d+)/);
   const numericValue = numericMatch ? parseInt(numericMatch[1], 10) : 0;
-  const suffix = value.replace(/[\d,]/g, '');
-  const shouldAnimate = numericValue > 0;
+  const suffix = value.replace(/[\d,\.]/g, '');
+  const shouldAnimate = numericValue > 0 && numericValue < 1000000;
   const { count, ref } = useCountUp(numericValue, 2000, shouldAnimate);
 
   return (
@@ -221,16 +228,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Testimonials */}
+      {/* Real Impact (replacing testimonials) */}
       <section className="px-4 sm:px-6 lg:px-8 py-16 md:py-24">
         <div className="max-w-[1200px] mx-auto">
           <SectionHeading
-            eyebrow={t.home.testimonials.eyebrow}
-            title={t.home.testimonials.title}
-            description={t.home.testimonials.description}
+            eyebrow={t.home.realImpact.eyebrow}
+            title={t.home.realImpact.title}
+            description={t.home.realImpact.description}
           />
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {t.home.testimonials.stories.map((story, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            {t.home.realImpact.cases.map((story, i) => (
               <motion.div
                 key={story.name}
                 initial={{ opacity: 0, y: 30 }}
@@ -239,8 +246,8 @@ export default function HomePage() {
                 transition={{ duration: 0.5, delay: i * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
                 className="glass-card rounded-3xl p-6 md:p-8"
               >
-                <p className="text-sm text-[var(--text-primary)] leading-relaxed mb-6 italic">
-                  &ldquo;{story.quote}&rdquo;
+                <p className="text-sm text-[var(--text-primary)] leading-relaxed mb-6">
+                  {story.summary}
                 </p>
                 <div>
                   <p className="text-sm font-semibold text-[var(--text-primary)]">
@@ -253,6 +260,28 @@ export default function HomePage() {
               </motion.div>
             ))}
           </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {t.home.realImpact.stats.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: i * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+                className="glass-card rounded-3xl p-6 text-center"
+              >
+                <p className="text-2xl md:text-3xl font-extrabold text-[var(--error)] mb-1">
+                  {stat.value}
+                </p>
+                <p className="text-xs text-[var(--text-secondary)]">
+                  {stat.label}
+                </p>
+              </motion.div>
+            ))}
+          </div>
+          <p className="text-xs text-[var(--text-muted)] text-center mt-6">
+            {t.home.realImpact.source}
+          </p>
         </div>
       </section>
 
@@ -272,6 +301,49 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Pricing */}
+      <section className="px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+        <div className="max-w-[1200px] mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            className="glass-card rounded-3xl p-8 md:p-12 max-w-3xl mx-auto text-center"
+          >
+            <span className="section-eyebrow block mb-3">{t.home.pricing.eyebrow}</span>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[var(--text-primary)] mb-4">
+              {t.home.pricing.title}
+            </h2>
+            <p className="text-base text-[var(--text-secondary)] mb-8 max-w-lg mx-auto">
+              {t.home.pricing.description}
+            </p>
+            <div className="mb-8">
+              <span className="text-5xl md:text-6xl font-extrabold text-[var(--accent-teal)]">
+                {t.home.pricing.price}
+              </span>
+              <span className="text-sm text-[var(--text-muted)] ml-2">
+                {t.home.pricing.period}
+              </span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left max-w-lg mx-auto mb-8">
+              {t.home.pricing.features.map((feature) => (
+                <div key={feature} className="flex items-center gap-2">
+                  <Check className="w-4 h-4 text-[var(--accent-teal)] shrink-0" />
+                  <span className="text-sm text-[var(--text-secondary)]">{feature}</span>
+                </div>
+              ))}
+            </div>
+            <button className="btn-primary animate-breathe">
+              {t.home.pricing.cta}
+              <ArrowRight className="w-5 h-5" />
+            </button>
+            <p className="text-xs text-[var(--text-muted)] mt-4">
+              {t.home.pricing.guarantee}
+            </p>
+          </motion.div>
+        </div>
+      </section>
     </Layout>
   );
 }

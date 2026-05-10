@@ -13,7 +13,7 @@ import {
   shieldPoints,
   notifications,
   chatMessages,
-} from "./schema";
+} from "./schema.js";
 
 export const usersRelations = relations(users, ({ one, many }) => ({
   gamblerProfile: one(gamblerProfiles, {

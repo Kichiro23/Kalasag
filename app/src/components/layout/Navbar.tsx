@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router';
-import { AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Shield,
   Sun,
@@ -18,6 +18,7 @@ const navLinks = [
   { path: '/get-help', key: 'getHelp' },
   { path: '/resources', key: 'resources' },
   { path: '/recovery-tools', key: 'recoveryTools' },
+  { path: '/stories', key: 'stories' },
   { path: '/families', key: 'families' },
   { path: '/about', key: 'about' },
   { path: '/contact', key: 'contact' },

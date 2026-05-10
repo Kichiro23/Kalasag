@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { createRouter, authedQuery } from "./middleware";
-import { getDb } from "./queries/connection";
-import { urgeLogs, gamblerProfiles, shieldPoints } from "@db/schema";
+import { createRouter, authedQuery } from "./middleware.js";
+import { getDb } from "./queries/connection.js";
+import { urgeLogs, gamblerProfiles, shieldPoints } from "../db/schema.js";
 import { eq, desc, count, sql } from "drizzle-orm";
 
 export const urgeRouter = createRouter({

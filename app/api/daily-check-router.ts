@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { createRouter, authedQuery } from "./middleware";
-import { getDb } from "./queries/connection";
-import { dailyChecks, shieldPoints, gamblerProfiles } from "@db/schema";
+import { createRouter, authedQuery } from "./middleware.js";
+import { getDb } from "./queries/connection.js";
+import { dailyChecks, shieldPoints, gamblerProfiles } from "../db/schema.js";
 import { eq, desc, and, gte } from "drizzle-orm";
 
 export const dailyCheckRouter = createRouter({

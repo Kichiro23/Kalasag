@@ -43,6 +43,7 @@ const ContactPage = lazy(() => import('./pages/public/ContactPage'));
 const PrivacyPage = lazy(() => import('./pages/public/PrivacyPage'));
 const TermsPage = lazy(() => import('./pages/public/TermsPage'));
 const SelfAssessmentPage = lazy(() => import('./pages/public/SelfAssessmentPage'));
+const PublicStoriesPage = lazy(() => import('./pages/public/StoriesPage'));
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -69,6 +70,7 @@ function AnimatedRoutes() {
           <Route path="/privacy" element={<Suspense fallback={<PageLoader />}><PrivacyPage /></Suspense>} />
           <Route path="/terms" element={<Suspense fallback={<PageLoader />}><TermsPage /></Suspense>} />
           <Route path="/self-assessment" element={<Suspense fallback={<PageLoader />}><SelfAssessmentPage /></Suspense>} />
+          <Route path="/stories" element={<Suspense fallback={<PageLoader />}><PublicStoriesPage /></Suspense>} />
 
           {/* Preserved existing routes */}
           <Route path="/onboarding" element={<OnboardingPage />} />

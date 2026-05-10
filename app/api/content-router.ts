@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { createRouter, publicQuery, authedQuery } from "./middleware";
-import { getDb } from "./queries/connection";
-import { recoveryContent, recoveryProgress } from "@db/schema";
+import { createRouter, publicQuery, authedQuery } from "./middleware.js";
+import { getDb } from "./queries/connection.js";
+import { recoveryContent, recoveryProgress } from "../db/schema.js";
 import { eq, desc, and } from "drizzle-orm";
 
 export const contentRouter = createRouter({

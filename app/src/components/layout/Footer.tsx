@@ -119,7 +119,7 @@ export default function Footer() {
               </div>
               <div className="trust-badge">
                 <Shield className="w-3.5 h-3.5" />
-                {t.footer.freeForever}
+                {t.footer.premiumAvailable}
               </div>
               <div className="trust-badge">
                 <Shield className="w-3.5 h-3.5" />
