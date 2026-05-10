@@ -212,7 +212,7 @@ export const content = {
     contact: {
       hero: { eyebrow: 'Get in Touch', title: 'We\'re Here', description: 'Have feedback, questions, or want to partner? Reach out directly to the developer. Every message is read personally.' },
       form: { title: 'Send a Message', description: 'Anonymous feedback welcome. No email required.', types: ['General feedback', 'Bug report', 'Partnership', 'Press inquiry', 'Feature request'], typeLabel: 'Type', messageLabel: 'Your Message', messagePlaceholder: 'Tell us what\'s on your mind...', submit: 'Send Message', submitting: 'Sending...', success: 'Message sent. Thank you.', honeypot: 'Do not fill this' },
-      developer: { title: 'Developer Contact', description: 'Direct line to Rommel Andrei De Leon, the creator of Kalasag:', email: 'rommeld216@gmail.com', phone: '+63 962 790 5910', location: '', copy: 'Copy', copied: 'Copied!' },
+      developer: { title: 'Developer Contact', description: 'Direct line to Rommel Andrei De Leon, the creator of Kalasag:', email: 'rommeld216@gmail.com', phone: '+63 962 790 5910', location: 'Malolos, Bulacan, Philippines', copy: 'Copy', copied: 'Copied!' },
       payment: { title: 'Support Kalasag', description: 'Your support keeps the lights on and helps us build better tools.', gcash: 'GCash / Maya: 0962 790 5910', paypal: 'PayPal / Google Pay: rommeld216@gmail.com', copy: 'Copy', copied: 'Copied!' },
       social: { title: 'Connect', description: 'Follow the journey and connect with the developer.' },
       bugBounty: { title: 'Bug Bounty', description: 'Found a security issue? Report it and get recognized.', cta: 'Report a Bug' },
@@ -238,6 +238,28 @@ export const content = {
       hero: { eyebrow: 'Your Recovery Space', title: 'Kalasag Dashboard', description: 'Track your progress, manage urges, and access all your recovery tools in one place. Completely anonymous \u2014 no account required.' },
       cta: 'Enter Dashboard',
       features: ['Streak tracker', 'Mood journal', 'Urge management', 'Financial tracker', 'Crisis tools', 'Anonymous community'],
+    },
+    privacy: {
+      title: 'Privacy Policy',
+      subtitle: 'Your privacy is the foundation of Kalasag. Read how we protect your data.',
+      sections: [
+        { icon: 'EyeOff', title: '100% Anonymous', text: 'We never ask for your real name, email, or any personal information to use our core features. You can access all support resources without ever logging in.' },
+        { icon: 'Lock', title: 'Zero Data Retention', text: 'For anonymous features, no personal data is stored on our servers. Mood journals and other sensitive tools can operate local-only on your device.' },
+        { icon: 'Database', title: 'No Tracking or Analytics', text: 'We do not use tracking pixels, third-party cookies, or individual-identifying analytics. Any anonymized metrics we use are aggregated and cannot be traced back to you.' },
+        { icon: 'Globe', title: 'No Data Selling', text: 'We do not sell, store, or share your data with third parties — ever. Kalasag is a non-profit initiative with the sole purpose of helping, not profiting from data.' },
+      ],
+      pledge: { title: 'Our Pledge', text: 'Kalasag will never sell, trade, or display ads using your data. This platform is free, anonymous, and will always remain so.' },
+      updated: 'Last updated: May 2026',
+    },
+    terms: {
+      title: 'Terms of Use',
+      subtitle: 'Your safety matters to us. Please read these terms before using Kalasag.',
+      sections: [
+        { icon: 'AlertCircle', title: 'Not Medical Advice', text: 'Kalasag provides peer support, education, and self-help tools. It is not a substitute for professional medical or psychiatric advice. If you are in danger, call emergency services or the crisis hotlines listed on our platform immediately.' },
+        { icon: 'Heart', title: 'Community of Respect', text: 'We expect all users to engage with respect, without discrimination, and without harassment. Any form of hate speech, bullying, or intimidation is prohibited and may result in access restriction.' },
+        { icon: 'Scale', title: 'Limitation of Liability', text: 'We do our best to ensure information accuracy, but we are not liable for any direct or indirect harm that may result from using this platform. If you are in crisis, please contact professional services.' },
+      ],
+      updated: 'Last updated: May 2026',
     },
     common: {
       learnMore: 'Learn More',
@@ -460,7 +482,7 @@ export const content = {
     contact: {
       hero: { eyebrow: 'Makipag-ugnayan', title: 'Nandito Kami', description: 'May feedback, tanong, o gusto makipag-partner? Makipag-ugnayan directly sa developer. Bawat mensahe ay binabasa nang personal.' },
       form: { title: 'Magpadala ng Mensahe', description: 'Ang anonymous feedback ay welcome. Hindi kailangan ng email.', types: ['General na feedback', 'Bug report', 'Partnership', 'Press inquiry', 'Feature request'], typeLabel: 'Uri', messageLabel: 'Iyong Mensahe', messagePlaceholder: 'Sabihin kung ano ang nasa isip mo...', submit: 'Ipadala', submitting: 'Nagpapadala...', success: 'Naipadala ang mensahe. Salamat.', honeypot: 'Huwag punan ito', previous: 'Mga Naunang Mensahe', noMessages: 'Wala pang mensahe. Magpadala sa itaas!', date: 'Petsa' },
-      developer: { title: 'Kontak ng Developer', description: 'Direct line kay Rommel Andrei De Leon, ang gumawa ng Kalasag:', email: 'rommeld216@gmail.com', phone: '+63 962 790 5910', location: 'Global', copy: 'Kopyahin', copied: 'Nakopya!' },
+      developer: { title: 'Kontak ng Developer', description: 'Direct line kay Rommel Andrei De Leon, ang gumawa ng Kalasag:', email: 'rommeld216@gmail.com', phone: '+63 962 790 5910', location: 'Malolos, Bulacan, Pilipinas', copy: 'Kopyahin', copied: 'Nakopya!' },
       payment: { title: 'Suportahan ang Kalasag', description: 'Ang iyong suporta ay nagpapanatili ng Kalasag at tumutulong mag-build ng mas magandang tools.', gcash: 'GCash / Maya: 0962 790 5910', paypal: 'PayPal / Google Pay: rommeld216@gmail.com', copy: 'Kopyahin', copied: 'Nakopya!' },
       social: { title: 'Makipag-connect', description: 'Sundan ang journey at makipag-connect sa developer.' },
       bugBounty: { title: 'Bug Bounty', description: 'Nakakita ng security issue? I-report ito at makilala.', cta: 'Mag-report ng Bug' },
@@ -486,6 +508,28 @@ export const content = {
       hero: { eyebrow: 'Your Recovery Space', title: 'Kalasag Dashboard', description: 'Track your progress, manage urges, and access all your recovery tools in one place. Completely anonymous \u2014 no account required.' },
       cta: 'Enter Dashboard',
       features: ['Streak tracker', 'Mood journal', 'Urge management', 'Financial tracker', 'Crisis tools', 'Anonymous community'],
+    },
+    privacy: {
+      title: 'Patakaran sa Privacy',
+      subtitle: 'Ang iyong privacy ay ang pundasyon ng Kalasag. Basahin kung paano namin protektahan ang iyong data.',
+      sections: [
+        { icon: 'EyeOff', title: '100% Anonymous', text: 'Hindi namin kailanman hihingin ang iyong tunay na pangalan, email, o anumang personal na impormasyon para gamitin ang aming core features. Maaari kang mag-access ng lahat ng support resources nang hindi naglologin.' },
+        { icon: 'Lock', title: 'Walang Data na Sini-store', text: 'Para sa mga anonymous na feature, walang personal na data ang sini-store sa aming mga server. Ang mood journal at iba pang sensitive na tool ay maaaring mag-operate nang local-only sa iyong device.' },
+        { icon: 'Database', title: 'Walang Tracking o Analytics', text: 'Hindi kami gumagamit ng tracking pixels, third-party cookies, o individual-identifying analytics. Kung gumagamit man kami ng anonymized metrics, ito ay aggregated at hindi maaaring traced pabalik sa iyo.' },
+        { icon: 'Globe', title: 'Walang Pagbebenta ng Data', text: 'Hindi namin ibinebenta, ini-store, o shinashare ang iyong data sa third parties — kailanman. Ang Kalasag ay isang non-profit initiative na may tanging layuning tulungan, hindi kumita mula sa data.' },
+      ],
+      pledge: { title: 'Aming Pangako', text: 'Ang Kalasag ay hindi kailanman magbe-benta, magte-trade, o magdi-display ng ads gamit ang iyong data. Ang platform na ito ay libre, anonymous, at palaging magiging ganoon.' },
+      updated: 'Huling na-update: Mayo 2026',
+    },
+    terms: {
+      title: 'Mga Tuntunin ng Paggamit',
+      subtitle: 'Mahalaga sa amin ang iyong kaligtasan. Pakibasa ang mga tuntuning ito bago gamitin ang Kalasag.',
+      sections: [
+        { icon: 'AlertCircle', title: 'Hindi Medical Advice', text: 'Ang Kalasag ay nagbibigay ng peer support, edukasyon, at self-help tools. Hindi ito kapalit ng propesyonal na medical o psychiatric na payo. Kung nasa panganib ka, tumawag agad sa emergency services o sa mga crisis hotline na nakalista sa aming platform.' },
+        { icon: 'Heart', title: 'Komunidad ng Paggalang', text: 'Inaasahan namin na ang lahat ng user ay makikitungo nang may paggalang, walang diskriminasyon, at walang pangha-harass. Ang anumang uri ng hate speech, bullying, o pananakot ay hindi pinapayagan at maaaring magresulta sa pagbabawal ng access.' },
+        { icon: 'Scale', title: 'Limitasyon ng Pananagutan', text: 'Ginagawa namin ang aming makakaya para matiyak ang kawastuhan ng impormasyon, ngunit hindi kami mananagot para sa anumang direktang o indirektang pinsala na maaaring magresulta mula sa paggamit ng platform na ito. Kung ikaw ay nasa crisis, mangyaring kumontak sa mga propesyonal na serbisyo.' },
+      ],
+      updated: 'Huling na-update: Mayo 2026',
     },
     common: {
       learnMore: 'Alamin Pa',

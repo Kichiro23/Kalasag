@@ -223,7 +223,12 @@ export default function ContactPage() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs text-[var(--text-muted)]">Location</p>
-                  <p className="text-sm font-medium text-[var(--text-primary)] truncate">{t.contact.developer.location}</p>
+                  <div className="flex items-center">
+                    <p className="text-sm font-medium text-[var(--text-primary)] truncate">{t.contact.developer.location}</p>
+                    {t.contact.developer.location && (
+                      <CopyButton text={t.contact.developer.location} copiedText={t.contact.developer.copied} />
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

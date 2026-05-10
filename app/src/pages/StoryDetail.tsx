@@ -1,15 +1,50 @@
 import { useParams, useNavigate } from 'react-router'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Heart, Share2, Quote } from 'lucide-react'
+import { ArrowLeft, Heart, Share2, Quote, Loader2, AlertTriangle } from 'lucide-react'
 import { trpc } from '@/providers/trpc'
 import DashboardLayout from '@/components/dashboard/DashboardLayout'
 
 export default function StoryDetail() {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
-  const { data: content } = trpc.content.getBySlug.useQuery({ slug: slug! }, { enabled: !!slug })
+  const { data: content, isLoading, error } = trpc.content.getBySlug.useQuery({ slug: slug! }, { enabled: !!slug })
 
-  if (!content) return null
+  if (isLoading) {
+    return (
+      <DashboardLayout showNav={false}>
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="w-8 h-8 text-[var(--accent-teal)] animate-spin" />
+        </div>
+      </DashboardLayout>
+    )
+  }
+
+  if (error || !content) {
+    return (
+      <DashboardLayout showNav={false}>
+        <div className="sticky top-0 z-20 dash-card px-5 py-4 -mx-5 mb-4" style={{ backgroundColor: 'var(--bg-surface)' }}>
+          <div className="flex items-center gap-3">
+            <button onClick={() => navigate('/dashboard/stories')} className="w-10 h-10 rounded-full dash-card flex items-center justify-center dash-interactive">
+              <ArrowLeft size={20} style={{ color: 'var(--text-primary)' }} />
+            </button>
+            <div className="flex-1 min-w-0">
+              <h1 className="text-[17px] font-semibold truncate" style={{ color: 'var(--text-primary)' }}>Story Not Found</h1>
+            </div>
+          </div>
+        </div>
+        <div className="text-center py-20">
+          <AlertTriangle className="w-12 h-12 text-amber-400 mx-auto mb-3" />
+          <p className="text-[15px] text-[var(--text-secondary)]">Could not load this story.</p>
+          <button
+            onClick={() => navigate('/dashboard/stories')}
+            className="mt-4 px-4 py-2 rounded-full bg-[var(--accent-teal)] text-white text-sm font-medium hover:brightness-110 transition-all"
+          >
+            Back to Stories
+          </button>
+        </div>
+      </DashboardLayout>
+    )
+  }
 
   return (
     <DashboardLayout showNav={false}>

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router'
 import { motion } from 'framer-motion'
-import { ArrowLeft, BookOpen, CheckCircle, ChevronRight, Brain, Waves, Wallet, Users, Globe, Award, AlertTriangle, Lightbulb } from 'lucide-react'
+import { ArrowLeft, BookOpen, CheckCircle, ChevronRight, Brain, Waves, Wallet, Users, Globe, Award, AlertTriangle, Lightbulb, Loader2 } from 'lucide-react'
 import { trpc } from '@/providers/trpc'
 import DashboardLayout from '@/components/dashboard/DashboardLayout'
 
@@ -28,7 +28,7 @@ const categoryLabels: Record<string, string> = {
 
 export default function RecoveryLibrary() {
   const navigate = useNavigate()
-  const { data: contents } = trpc.content.list.useQuery()
+  const { data: contents, isLoading, error } = trpc.content.list.useQuery()
   const { data: progress } = trpc.content.progress.useQuery()
 
   const completedIds = new Set(progress?.filter(p => p.completed).map(p => p.contentId) ?? [])
@@ -38,6 +38,45 @@ export default function RecoveryLibrary() {
     acc[item.category].push(item)
     return acc
   }, {} as Record<string, typeof contents>) ?? {}
+
+  if (isLoading) {
+    return (
+      <DashboardLayout>
+        <div className="flex items-center gap-3 pb-4">
+          <button onClick={() => navigate('/dashboard')} className="w-10 h-10 rounded-full dash-card flex items-center justify-center dash-interactive">
+            <ArrowLeft size={20} style={{ color: 'var(--text-primary)' }} />
+          </button>
+          <h1 className="text-[22px] font-bold" style={{ color: 'var(--text-primary)' }}>Recovery Library</h1>
+        </div>
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="w-8 h-8 text-[var(--accent-teal)] animate-spin" />
+        </div>
+      </DashboardLayout>
+    )
+  }
+
+  if (error) {
+    return (
+      <DashboardLayout>
+        <div className="flex items-center gap-3 pb-4">
+          <button onClick={() => navigate('/dashboard')} className="w-10 h-10 rounded-full dash-card flex items-center justify-center dash-interactive">
+            <ArrowLeft size={20} style={{ color: 'var(--text-primary)' }} />
+          </button>
+          <h1 className="text-[22px] font-bold" style={{ color: 'var(--text-primary)' }}>Recovery Library</h1>
+        </div>
+        <div className="text-center py-20">
+          <AlertTriangle className="w-12 h-12 text-amber-400 mx-auto mb-3" />
+          <p className="text-[15px] text-[var(--text-secondary)]">Failed to load library content.</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="mt-4 px-4 py-2 rounded-full bg-[var(--accent-teal)] text-white text-sm font-medium hover:brightness-110 transition-all"
+          >
+            Retry
+          </button>
+        </div>
+      </DashboardLayout>
+    )
+  }
 
   return (
     <DashboardLayout>
