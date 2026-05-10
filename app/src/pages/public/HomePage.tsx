@@ -50,12 +50,12 @@ function StatCounter({ value, label }: { value: string; label: string }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.5, delay: 0, ease: [0.25, 0.1, 0.25, 1] }}
-      className="glass-card rounded-3xl p-6 text-center"
+      className="glass-card rounded-3xl p-6 text-center min-h-[140px] flex flex-col justify-center"
     >
       <p className="text-3xl md:text-4xl font-extrabold text-[var(--accent-teal)] mb-2">
         {shouldAnimate ? `${count.toLocaleString()}${suffix}` : value}
       </p>
-      <p className="text-sm text-[var(--text-secondary)]">
+      <p className="text-sm text-[var(--text-secondary)] text-balance">
         {label}
       </p>
     </motion.div>
@@ -154,7 +154,7 @@ export default function HomePage() {
       </section>
 
       {/* Crisis Band */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -166,7 +166,7 @@ export default function HomePage() {
             <h2 className="text-xl md:text-2xl font-bold text-[var(--text-primary)] mb-2">
               {t.home.crisisBand.title}
             </h2>
-            <p className="text-sm text-[var(--text-secondary)]">
+            <p className="text-sm text-[var(--text-secondary)] text-balance">
               {t.home.crisisBand.description}
             </p>
           </div>
@@ -178,7 +178,7 @@ export default function HomePage() {
       </section>
 
       {/* Features */}
-      <section className="px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+      <section className="px-4 sm:px-6 lg:px-8 py-10 md:py-16">
         <div className="max-w-[1200px] mx-auto">
           <SectionHeading
             eyebrow={t.home.features.eyebrow}
@@ -194,7 +194,7 @@ export default function HomePage() {
       </section>
 
       {/* Assessment Teaser */}
-      <section className="px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+      <section className="px-4 sm:px-6 lg:px-8 py-10 md:py-16">
         <div className="max-w-[1200px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -216,7 +216,7 @@ export default function HomePage() {
                   <div className="w-6 h-6 rounded-full bg-[var(--accent-teal)]/10 flex items-center justify-center shrink-0 mt-0.5">
                     <span className="text-xs font-bold text-[var(--accent-teal)]">{i + 1}</span>
                   </div>
-                  <p className="text-sm text-[var(--text-secondary)]">{q}</p>
+                  <p className="text-sm text-[var(--text-secondary)] text-balance">{q}</p>
                 </div>
               ))}
             </div>
@@ -229,7 +229,7 @@ export default function HomePage() {
       </section>
 
       {/* Real Impact (replacing testimonials) */}
-      <section className="px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+      <section className="px-4 sm:px-6 lg:px-8 py-10 md:py-16">
         <div className="max-w-[1200px] mx-auto">
           <SectionHeading
             eyebrow={t.home.realImpact.eyebrow}
@@ -268,7 +268,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: i * 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-                className="glass-card rounded-3xl p-6 text-center"
+                className="glass-card rounded-3xl p-6 text-center min-h-[140px] flex flex-col justify-center"
               >
                 <p className="text-2xl md:text-3xl font-extrabold text-[var(--error)] mb-1">
                   {stat.value}
@@ -286,7 +286,7 @@ export default function HomePage() {
       </section>
 
       {/* Stats */}
-      <section className="px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+      <section className="px-4 sm:px-6 lg:px-8 py-10 md:py-16">
         <div className="max-w-[1200px] mx-auto">
           <SectionHeading
             eyebrow={t.home.stats.eyebrow}
@@ -302,7 +302,7 @@ export default function HomePage() {
       </section>
 
       {/* Pricing */}
-      <section className="px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+      <section className="px-4 sm:px-6 lg:px-8 py-10 md:py-16">
         <div className="max-w-[1200px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -330,7 +330,7 @@ export default function HomePage() {
               {t.home.pricing.features.map((feature) => (
                 <div key={feature} className="flex items-center gap-2">
                   <Check className="w-4 h-4 text-[var(--accent-teal)] shrink-0" />
-                  <span className="text-sm text-[var(--text-secondary)]">{feature}</span>
+                  <span className="text-sm text-[var(--text-secondary)] text-balance">{feature}</span>
                 </div>
               ))}
             </div>

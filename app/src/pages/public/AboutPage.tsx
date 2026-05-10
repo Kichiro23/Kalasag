@@ -48,7 +48,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -71,7 +71,7 @@ export default function AboutPage() {
       </section>
 
       {/* Developer Story */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -106,7 +106,7 @@ export default function AboutPage() {
       </section>
 
       {/* Partners */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -131,7 +131,7 @@ export default function AboutPage() {
       </section>
 
       {/* Non-profit */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16 pb-20 md:pb-28">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12 pb-12 md:pb-20">
         <div className="max-w-[1200px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

@@ -63,7 +63,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* Philippine Stats */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto">
           <SectionHeading
             eyebrow="Philippines Gambling Data"
@@ -90,7 +90,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* Understanding */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -115,7 +115,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* Warning Signs */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -155,7 +155,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* Reddit Tips */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto">
           <SectionHeading
             eyebrow="From Real People"
@@ -192,7 +192,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* Recovery Apps */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto">
           <SectionHeading
             eyebrow="Recommended Apps"
@@ -226,7 +226,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* Financial Recovery */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -274,7 +274,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* Filipino Context */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16 pb-20 md:pb-28">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12 pb-12 md:pb-20">
         <div className="max-w-[1200px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}

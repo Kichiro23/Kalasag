@@ -109,7 +109,7 @@ export default function RecoveryToolsPage() {
       </section>
 
       {/* Tools Grid */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto">
           <SectionHeading
             eyebrow="Built-in Tools"
@@ -125,7 +125,7 @@ export default function RecoveryToolsPage() {
       </section>
 
       {/* Games Section */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto">
           <SectionHeading
             eyebrow="Urge-Stopping Games"
@@ -168,7 +168,7 @@ export default function RecoveryToolsPage() {
       </section>
 
       {/* External Apps */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16 pb-20 md:pb-28">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12 pb-20 md:pb-28">
         <div className="max-w-[1200px] mx-auto">
           <SectionHeading
             eyebrow="Also Recommended"

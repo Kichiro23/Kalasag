@@ -18,7 +18,7 @@ export default function BottomNav() {
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 pb-safe">
       <div className="mx-4 mb-4">
-        <div className="glass-thick rounded-[28px] specular-highlight flex items-center justify-around py-3 px-2">
+        <div className="dash-nav rounded-[28px] flex items-center justify-around py-3 px-2">
           {tabs.map((tab) => (
             <button
               key={tab.label}
@@ -34,19 +34,19 @@ export default function BottomNav() {
               {isActive(tab.path) && (
                 <motion.div
                   layoutId="activeTab"
-                  className="absolute inset-0 bg-[#4338CA] rounded-2xl"
+                  className="absolute inset-0 bg-[var(--accent-teal)] rounded-2xl"
                   transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                 />
               )}
               <tab.icon
                 size={22}
                 className={`relative z-10 ${
-                  isActive(tab.path) ? 'text-white' : 'text-[#64748B]'
+                  isActive(tab.path) ? 'text-white' : 'text-[var(--text-muted)]'
                 }`}
               />
               <span
                 className={`relative z-10 text-[10px] font-medium ${
-                  isActive(tab.path) ? 'text-white' : 'text-[#64748B]'
+                  isActive(tab.path) ? 'text-white' : 'text-[var(--text-muted)]'
                 }`}
               >
                 {tab.label}

@@ -4,32 +4,32 @@ import {
   Shield, Zap, BookOpen, TreePine, AlertTriangle,
   BarChart3, Wallet, Ban, MessageCircle,
   Heart, ChevronRight, Flame, Trophy,
-  Wind, Brain, MapPin, Target, Sparkles
+  Wind, Brain, Sparkles
 } from 'lucide-react'
 import BottomNav from '@/components/BottomNav'
+import GamblingCalculator from '@/components/dashboard/GamblingCalculator'
 
 const quickActions = [
-  { icon: AlertTriangle, label: 'Emergency', path: '/dashboard/sos', color: 'glass-red', iconColor: 'text-red-400' },
-  { icon: Brain, label: 'CBT Chat', path: '/dashboard/shield-bot', color: 'glass-blue', iconColor: 'text-blue-400' },
-  { icon: BookOpen, label: 'Recovery', path: '/dashboard/recovery', color: 'glass-base', iconColor: 'text-indigo-400' },
-  { icon: Zap, label: 'Urge Log', path: '/dashboard/trigger-map', color: 'glass-yellow', iconColor: 'text-yellow-400' },
-  { icon: TreePine, label: 'Puno Ko', path: '/dashboard/puno-ko', color: 'glass-green', iconColor: 'text-green-400' },
-  { icon: BarChart3, label: 'Analytics', path: '/dashboard/analytics', color: 'glass-base', iconColor: 'text-purple-400' },
-  { icon: Wallet, label: 'Finance', path: '/dashboard/finance', color: 'glass-base', iconColor: 'text-emerald-400' },
-  { icon: Ban, label: 'Blocker', path: '/dashboard/blocker', color: 'glass-base', iconColor: 'text-orange-400' },
+  { icon: AlertTriangle, label: 'Emergency', path: '/dashboard/sos', color: 'dash-card-danger', iconColor: 'text-red-400' },
+  { icon: Brain, label: 'CBT Chat', path: '/dashboard/shield-bot', color: 'dash-card-info', iconColor: 'text-blue-400' },
+  { icon: BookOpen, label: 'Recovery', path: '/dashboard/recovery', color: 'dash-card', iconColor: 'text-[var(--accent-teal)]' },
+  { icon: Zap, label: 'Urge Log', path: '/dashboard/trigger-map', color: 'dash-card-warning', iconColor: 'text-amber-400' },
+  { icon: TreePine, label: 'Puno Ko', path: '/dashboard/puno-ko', color: 'dash-card-success', iconColor: 'text-emerald-400' },
+  { icon: BarChart3, label: 'Analytics', path: '/dashboard/analytics', color: 'dash-card', iconColor: 'text-purple-400' },
+  { icon: Wallet, label: 'Finance', path: '/dashboard/finance', color: 'dash-card', iconColor: 'text-emerald-400' },
+  { icon: Ban, label: 'Blocker', path: '/dashboard/blocker', color: 'dash-card', iconColor: 'text-orange-400' },
 ]
 
 export default function Dashboard() {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen bg-[#020617] pb-32 overflow-x-hidden">
-      {/* Aurora Background */}
-      <div
-        className="fixed inset-0 bg-cover bg-center opacity-40"
-        style={{ backgroundImage: 'url(/assets/bg-aurora.jpg)' }}
-      />
-      <div className="fixed inset-0 bg-gradient-to-b from-[#020617]/60 via-transparent to-[#020617]" />
+    <div className="min-h-screen pb-32 overflow-x-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
+      {/* Background orbs */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] rounded-full bg-[var(--accent-teal)] opacity-[var(--orb-opacity)] blur-[120px] animate-float-orb" />
+        <div className="absolute bottom-[10%] right-[-5%] w-[400px] h-[400px] rounded-full bg-[var(--calm-blue)] opacity-[var(--orb-opacity)] blur-[100px] animate-float-orb-slow" />
+      </div>
 
       {/* Content */}
       <div className="relative z-10 px-5 pt-12">
@@ -42,13 +42,13 @@ export default function Dashboard() {
         >
           <div className="flex items-center justify-between mb-2">
             <div>
-              <h1 className="text-[28px] font-bold text-white tracking-tight leading-tight">
-                Kumusta? <span className="text-[#64748B]">Stay strong.</span>
+              <h1 className="text-[28px] font-bold tracking-tight leading-tight" style={{ color: 'var(--text-primary)' }}>
+                Kumusta? <span style={{ color: 'var(--text-muted)' }}>Stay strong.</span>
               </h1>
-              <p className="text-[13px] text-[#64748B] mt-1">Your shield is active today.</p>
+              <p className="text-[13px] mt-1" style={{ color: 'var(--text-muted)' }}>Your shield is active today.</p>
             </div>
-            <div className="w-12 h-12 rounded-full glass-base flex items-center justify-center specular-highlight">
-              <Shield size={22} className="text-indigo-400" />
+            <div className="w-12 h-12 rounded-full dash-card flex items-center justify-center">
+              <Shield size={22} className="text-[var(--accent-teal)]" />
             </div>
           </div>
         </motion.div>
@@ -60,20 +60,20 @@ export default function Dashboard() {
           transition={{ duration: 0.5, delay: 0.1 }}
           className="grid grid-cols-3 gap-3 mb-6"
         >
-          <div className="glass-base rounded-2xl p-4 specular-highlight text-center">
+          <div className="dash-card rounded-2xl p-4 text-center">
             <Flame size={20} className="text-orange-400 mx-auto mb-1" />
-            <div className="text-xl font-bold text-white">12</div>
-            <div className="text-[11px] text-[#64748B]">Day Streak</div>
+            <div className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>12</div>
+            <div className="text-[11px]" style={{ color: 'var(--text-muted)' }}>Day Streak</div>
           </div>
-          <div className="glass-base rounded-2xl p-4 specular-highlight text-center">
-            <Trophy size={20} className="text-yellow-400 mx-auto mb-1" />
-            <div className="text-xl font-bold text-white">2.5k</div>
-            <div className="text-[11px] text-[#64748B]">Points</div>
+          <div className="dash-card rounded-2xl p-4 text-center">
+            <Trophy size={20} className="text-amber-400 mx-auto mb-1" />
+            <div className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>2.5k</div>
+            <div className="text-[11px]" style={{ color: 'var(--text-muted)' }}>Points</div>
           </div>
-          <div className="glass-base rounded-2xl p-4 specular-highlight text-center">
+          <div className="dash-card rounded-2xl p-4 text-center">
             <Wallet size={20} className="text-emerald-400 mx-auto mb-1" />
-            <div className="text-xl font-bold text-white">8.2k</div>
-            <div className="text-[11px] text-[#64748B]">Saved</div>
+            <div className="text-xl font-bold" style={{ color: 'var(--text-primary)' }}>₱8.2k</div>
+            <div className="text-[11px]" style={{ color: 'var(--text-muted)' }}>Saved</div>
           </div>
         </motion.div>
 
@@ -86,7 +86,7 @@ export default function Dashboard() {
         >
           <button
             onClick={() => navigate('/intervention')}
-            className="w-full glass-red rounded-[28px] p-6 specular-highlight glass-interactive animate-pulse-slow relative overflow-hidden"
+            className="w-full dash-card-danger rounded-[28px] p-6 dash-interactive animate-pulse-slow relative overflow-hidden"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-transparent pointer-events-none" />
             <div className="relative z-10 flex flex-col items-center">
@@ -94,7 +94,7 @@ export default function Dashboard() {
                 <Heart size={32} className="text-red-400" />
               </div>
               <h2 className="text-[22px] font-bold text-white mb-1">I FEEL AN URGE</h2>
-              <p className="text-[13px] text-red-300/80">Tap here for immediate help</p>
+              <p className="text-[13px] text-red-200/80">Tap here for immediate help</p>
             </div>
           </button>
         </motion.div>
@@ -105,7 +105,7 @@ export default function Dashboard() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <h3 className="text-[17px] font-semibold text-white mb-4">Quick Actions</h3>
+          <h3 className="text-[17px] font-semibold mb-4" style={{ color: 'var(--text-primary)' }}>Quick Actions</h3>
           <div className="grid grid-cols-2 gap-3">
             {quickActions.map((action, i) => (
               <motion.button
@@ -114,10 +114,10 @@ export default function Dashboard() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.35 + i * 0.05 }}
                 onClick={() => navigate(action.path)}
-                className={`${action.color} rounded-2xl p-4 specular-highlight glass-interactive text-left`}
+                className={`${action.color} rounded-2xl p-4 dash-interactive text-left`}
               >
                 <action.icon size={22} className={`${action.iconColor} mb-2`} />
-                <div className="text-[15px] font-semibold text-white">{action.label}</div>
+                <div className="text-[15px] font-semibold" style={{ color: 'var(--text-primary)' }}>{action.label}</div>
               </motion.button>
             ))}
           </div>
@@ -132,16 +132,16 @@ export default function Dashboard() {
         >
           <button
             onClick={() => navigate('/dashboard/breathe')}
-            className="w-full glass-base rounded-2xl p-4 specular-highlight glass-interactive flex items-center gap-4"
+            className="w-full dash-card rounded-2xl p-4 dash-interactive flex items-center gap-4"
           >
-            <div className="w-12 h-12 rounded-full bg-indigo-500/20 flex items-center justify-center">
-              <Wind size={22} className="text-indigo-400" />
+            <div className="w-12 h-12 rounded-full bg-[var(--accent-teal)]/10 flex items-center justify-center">
+              <Wind size={22} className="text-[var(--accent-teal)]" />
             </div>
             <div className="flex-1 text-left">
-              <div className="text-[15px] font-semibold text-white">Breathing Exercise</div>
-              <div className="text-[13px] text-[#64748B]">4-7-8 technique to calm your mind</div>
+              <div className="text-[15px] font-semibold" style={{ color: 'var(--text-primary)' }}>Breathing Exercise</div>
+              <div className="text-[13px]" style={{ color: 'var(--text-muted)' }}>4-7-8 technique to calm your mind</div>
             </div>
-            <ChevronRight size={18} className="text-[#64748B]" />
+            <ChevronRight size={18} style={{ color: 'var(--text-muted)' }} />
           </button>
         </motion.div>
 
@@ -152,13 +152,13 @@ export default function Dashboard() {
           transition={{ duration: 0.5, delay: 0.7 }}
           className="mb-6"
         >
-          <h3 className="text-[17px] font-semibold text-white mb-3">Daily Tip</h3>
-          <div className="glass-base rounded-2xl p-5 specular-highlight">
+          <h3 className="text-[17px] font-semibold mb-3" style={{ color: 'var(--text-primary)' }}>Daily Tip</h3>
+          <div className="dash-card rounded-2xl p-5">
             <div className="flex items-start gap-3">
-              <Sparkles size={18} className="text-yellow-400 mt-0.5 shrink-0" />
+              <Sparkles size={18} className="text-amber-400 mt-0.5 shrink-0" />
               <div>
-                <p className="text-[15px] text-[#CBD5E1] leading-relaxed">
-                  When an urge hits, use the <span className="text-white font-semibold">5-minute rule</span>. 
+                <p className="text-[15px] leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                  When an urge hits, use the <span className="font-semibold" style={{ color: 'var(--text-primary)' }}>5-minute rule</span>. 
                   Wait just 5 minutes before acting. Most urges fade within that time.
                 </p>
               </div>
@@ -174,12 +174,12 @@ export default function Dashboard() {
           className="mb-6"
         >
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-[17px] font-semibold text-white">This Week</h3>
-            <button onClick={() => navigate('/dashboard/analytics')} className="text-[13px] text-indigo-400">
+            <h3 className="text-[17px] font-semibold" style={{ color: 'var(--text-primary)' }}>This Week</h3>
+            <button onClick={() => navigate('/dashboard/analytics')} className="text-[13px] text-[var(--accent-teal)]">
               See All
             </button>
           </div>
-          <div className="glass-base rounded-2xl p-5 specular-highlight">
+          <div className="dash-card rounded-2xl p-5">
             <div className="flex items-end justify-between h-24 gap-2">
               {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, i) => {
                 const heights = [60, 80, 40, 90, 70, 50, 85]
@@ -190,16 +190,19 @@ export default function Dashboard() {
                         initial={{ height: 0 }}
                         animate={{ height: `${heights[i]}%` }}
                         transition={{ duration: 0.8, delay: 0.9 + i * 0.1 }}
-                        className="w-full max-w-[24px] rounded-full bg-gradient-to-t from-indigo-600 to-indigo-400"
+                        className="w-full max-w-[24px] rounded-full bg-gradient-to-t from-[var(--accent-teal)] to-[var(--accent-teal-hover)]"
                       />
                     </div>
-                    <span className="text-[10px] text-[#64748B]">{day}</span>
+                    <span className="text-[10px]" style={{ color: 'var(--text-muted)' }}>{day}</span>
                   </div>
                 )
               })}
             </div>
           </div>
         </motion.div>
+      </div>
+
+        <GamblingCalculator />
       </div>
 
       <BottomNav />

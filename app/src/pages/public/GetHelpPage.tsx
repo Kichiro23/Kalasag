@@ -72,7 +72,7 @@ export default function GetHelpPage() {
       </section>
 
       {/* Philippines Hotlines */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto">
           <SectionHeading
             eyebrow={t.getHelp.philippines.title}
@@ -158,7 +158,7 @@ export default function GetHelpPage() {
       </section>
 
       {/* International */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto">
           <SectionHeading
             eyebrow={t.getHelp.international.title}
@@ -193,7 +193,7 @@ export default function GetHelpPage() {
       </section>
 
       {/* Rehab Centers */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto">
           <SectionHeading
             eyebrow="PAGCOR-Accredited Rehab Centers"
@@ -222,7 +222,7 @@ export default function GetHelpPage() {
       </section>
 
       {/* Community Platforms */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16 pb-20 md:pb-28">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12 pb-12 md:pb-20">
         <div className="max-w-[1200px] mx-auto">
           <SectionHeading
             eyebrow="Online Communities"

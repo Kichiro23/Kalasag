@@ -63,7 +63,7 @@ export default function SelfExclusionPage() {
       </section>
 
       {/* PAGCOR */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -153,7 +153,7 @@ export default function SelfExclusionPage() {
       </section>
 
       {/* Blocking Software */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto">
           <SectionHeading
             eyebrow="Blocking Software"
@@ -190,7 +190,7 @@ export default function SelfExclusionPage() {
       </section>
 
       {/* International Programs */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12">
         <div className="max-w-[1200px] mx-auto">
           <SectionHeading
             eyebrow="International"
@@ -230,7 +230,7 @@ export default function SelfExclusionPage() {
       </section>
 
       {/* Financial Protection */}
-      <section className="px-4 sm:px-6 lg:px-8 py-12 md:py-16 pb-20 md:pb-28">
+      <section className="px-4 sm:px-6 lg:px-8 py-8 md:py-12 pb-12 md:pb-20">
         <div className="max-w-[1200px] mx-auto">
           <div className="text-center mb-12">
             <span className="section-eyebrow block mb-3">{t.selfExclusion.financial.title}</span>
