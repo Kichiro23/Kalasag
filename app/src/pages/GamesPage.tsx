@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Palette, Circle, Type, Wind, Trophy, RotateCcw } from 'lucide-react'
+import DashboardLayout from '@/components/dashboard/DashboardLayout'
 
 interface GameState {
   game: string | null
@@ -87,112 +88,107 @@ export default function GamesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#020617]">
-      <div className="fixed inset-0 bg-gradient-to-b from-indigo-950/30 via-[#020617] to-[#020617]" />
-
-      <div className="relative z-10">
-        <div className="flex items-center gap-3 px-5 pt-12 pb-4">
-          <button onClick={() => navigate('/dashboard')} className="w-10 h-10 rounded-full glass-base flex items-center justify-center specular-highlight">
-            <ArrowLeft size={20} className="text-white" />
-          </button>
-          <div className="flex-1">
-            <h1 className="text-[22px] font-bold text-white">Urge Arcade</h1>
-            {state.game && (
-              <div className="flex items-center gap-2 mt-1">
-                <Trophy size={14} className="text-yellow-400" />
-                <span className="text-[13px] text-yellow-400">{state.score} pts</span>
-              </div>
-            )}
-          </div>
+    <DashboardLayout>
+      <div className="flex items-center gap-3 pb-4">
+        <button onClick={() => navigate('/dashboard')} className="w-10 h-10 rounded-full dash-card flex items-center justify-center dash-interactive">
+          <ArrowLeft size={20} style={{ color: 'var(--text-primary)' }} />
+        </button>
+        <div className="flex-1">
+          <h1 className="text-[22px] font-bold" style={{ color: 'var(--text-primary)' }}>Urge Arcade</h1>
           {state.game && (
-            <button onClick={() => setState({ game: null, score: 0, targetColor: '', colors: [], message: '' })} className="w-10 h-10 rounded-full glass-base flex items-center justify-center specular-highlight">
-              <RotateCcw size={18} className="text-white" />
-            </button>
+            <div className="flex items-center gap-2 mt-1">
+              <Trophy size={14} className="text-amber-400" />
+              <span className="text-[13px] text-amber-400">{state.score} pts</span>
+            </div>
           )}
         </div>
+        {state.game && (
+          <button onClick={() => setState({ game: null, score: 0, targetColor: '', colors: [], message: '' })} className="w-10 h-10 rounded-full dash-card flex items-center justify-center dash-interactive">
+            <RotateCcw size={18} style={{ color: 'var(--text-primary)' }} />
+          </button>
+        )}
+      </div>
 
-        <div className="px-5">
-          {!state.game ? (
+      {!state.game ? (
+        <div className="grid grid-cols-2 gap-3">
+          {[
+            { icon: Palette, name: 'Color Match', desc: 'Tap the right color', action: startColorGame, color: 'text-pink-400' },
+            { icon: Circle, name: 'Balloon Pop', desc: 'Pop all balloons', action: startBalloonGame, color: 'text-blue-400' },
+            { icon: Type, name: 'Word Scramble', desc: 'Unscramble words', action: startWordGame, color: 'text-emerald-400' },
+            { icon: Wind, name: 'Breathing', desc: 'Breathe & relax', action: () => navigate('/dashboard/breathe'), color: 'text-[var(--accent-teal)]' },
+          ].map((game, i) => (
+            <motion.button
+              key={game.name}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              onClick={game.action}
+              className="dash-card rounded-2xl p-5 dash-interactive flex flex-col items-center text-center gap-3"
+            >
+              <game.icon size={32} className={game.color} />
+              <div>
+                <h3 className="text-[15px] font-semibold" style={{ color: 'var(--text-primary)' }}>{game.name}</h3>
+                <p className="text-[12px] mt-1" style={{ color: 'var(--text-muted)' }}>{game.desc}</p>
+              </div>
+            </motion.button>
+          ))}
+        </div>
+      ) : (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4">
+          <p className="text-[17px] text-center mb-6 font-medium" style={{ color: 'var(--text-primary)' }}>{state.message}</p>
+
+          {state.game === 'color' && (
             <div className="grid grid-cols-2 gap-3">
-              {[
-                { icon: Palette, name: 'Color Match', desc: 'Tap the right color', action: startColorGame, color: 'text-pink-400' },
-                { icon: Circle, name: 'Balloon Pop', desc: 'Pop all balloons', action: startBalloonGame, color: 'text-blue-400' },
-                { icon: Type, name: 'Word Scramble', desc: 'Unscramble words', action: startWordGame, color: 'text-green-400' },
-                { icon: Wind, name: 'Breathing', desc: 'Breathe & relax', action: () => navigate('/dashboard/breathe'), color: 'text-indigo-400' },
-              ].map((game, i) => (
+              {state.colors.map((colorName) => {
+                const color = colorOptions.find(c => c.name === colorName)
+                return (
+                  <button
+                    key={colorName}
+                    onClick={() => handleColorTap(colorName)}
+                    className={`${color?.bg ?? 'bg-gray-500'} rounded-2xl h-24 flex items-center justify-center shadow-lg dash-interactive`}
+                  >
+                    <span className="text-white font-bold text-[15px]">{colorName}</span>
+                  </button>
+                )
+              })}
+            </div>
+          )}
+
+          {state.game === 'word' && (
+            <div className="flex flex-col items-center gap-4">
+              <div className="dash-card rounded-2xl p-6">
+                <p className="text-[28px] font-bold text-[var(--accent-teal)] tracking-[8px] text-center">{scrambledWord}</p>
+              </div>
+              <input
+                type="text"
+                value={userGuess}
+                onChange={(e) => setUserGuess(e.target.value)}
+                onKeyDown={(e) => e.key === 'Enter' && handleWordSubmit()}
+                placeholder="Your answer..."
+                className="w-full dash-card rounded-2xl px-5 py-4 text-[17px] text-center outline-none placeholder:text-[var(--text-muted)]"
+                style={{ color: 'var(--text-primary)' }}
+              />
+              <button onClick={handleWordSubmit} className="dash-card rounded-full px-8 py-3 font-medium dash-interactive" style={{ color: 'var(--text-primary)' }}>
+                Submit
+              </button>
+            </div>
+          )}
+
+          {state.game === 'balloon' && (
+            <div className="grid grid-cols-4 gap-3">
+              {balloons.map(b => (
                 <motion.button
-                  key={game.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  onClick={game.action}
-                  className="glass-base rounded-2xl p-5 specular-highlight glass-interactive flex flex-col items-center text-center gap-3"
-                >
-                  <game.icon size={32} className={game.color} />
-                  <div>
-                    <h3 className="text-[15px] font-semibold text-white">{game.name}</h3>
-                    <p className="text-[12px] text-[#64748B] mt-1">{game.desc}</p>
-                  </div>
-                </motion.button>
+                  key={b.id}
+                  initial={{ scale: 1 }}
+                  animate={{ scale: b.popped ? 0 : 1, opacity: b.popped ? 0 : 1 }}
+                  onClick={() => !b.popped && popBalloon(b.id)}
+                  className={`${b.color} rounded-full aspect-square shadow-lg dash-interactive`}
+                />
               ))}
             </div>
-          ) : (
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4">
-              <p className="text-[17px] text-white text-center mb-6 font-medium">{state.message}</p>
-
-              {state.game === 'color' && (
-                <div className="grid grid-cols-2 gap-3">
-                  {state.colors.map((colorName) => {
-                    const color = colorOptions.find(c => c.name === colorName)
-                    return (
-                      <button
-                        key={colorName}
-                        onClick={() => handleColorTap(colorName)}
-                        className={`${color?.bg ?? 'bg-gray-500'} rounded-2xl h-24 flex items-center justify-center shadow-lg glass-interactive`}
-                      >
-                        <span className="text-white font-bold text-[15px]">{colorName}</span>
-                      </button>
-                    )
-                  })}
-                </div>
-              )}
-
-              {state.game === 'word' && (
-                <div className="flex flex-col items-center gap-4">
-                  <div className="glass-thick rounded-2xl p-6 specular-highlight">
-                    <p className="text-[28px] font-bold text-indigo-400 tracking-[8px] text-center">{scrambledWord}</p>
-                  </div>
-                  <input
-                    type="text"
-                    value={userGuess}
-                    onChange={(e) => setUserGuess(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleWordSubmit()}
-                    placeholder="Your answer..."
-                    className="w-full glass-base rounded-2xl px-5 py-4 text-white text-[17px] text-center placeholder-[#64748B] outline-none specular-highlight"
-                  />
-                  <button onClick={handleWordSubmit} className="glass-base rounded-full px-8 py-3 text-white font-medium specular-highlight glass-interactive">
-                    Submit
-                  </button>
-                </div>
-              )}
-
-              {state.game === 'balloon' && (
-                <div className="grid grid-cols-4 gap-3">
-                  {balloons.map(b => (
-                    <motion.button
-                      key={b.id}
-                      initial={{ scale: 1 }}
-                      animate={{ scale: b.popped ? 0 : 1, opacity: b.popped ? 0 : 1 }}
-                      onClick={() => !b.popped && popBalloon(b.id)}
-                      className={`${b.color} rounded-full aspect-square shadow-lg glass-interactive`}
-                    />
-                  ))}
-                </div>
-              )}
-            </motion.div>
           )}
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      )}
+    </DashboardLayout>
   )
 }

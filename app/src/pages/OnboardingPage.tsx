@@ -9,8 +9,8 @@ const slides = [
     title: 'Welcome to Kalasag',
     subtitle: 'Your Digital Shield',
     description: 'Kalasag means "shield" in Filipino. We are here to protect you from gambling addiction and help you build a stronger future.',
-    color: 'text-indigo-400',
-    bg: 'from-indigo-500/20 to-transparent',
+    color: 'text-[var(--accent-teal)]',
+    bg: 'from-[var(--accent-teal)]/20 to-transparent',
   },
   {
     icon: Heart,
@@ -33,16 +33,16 @@ const slides = [
     title: 'Bayanihan',
     subtitle: 'Community Support',
     description: 'Join anonymous peer support groups. In Filipino culture, bayanihan means helping each other through difficult times.',
-    color: 'text-green-400',
-    bg: 'from-green-500/20 to-transparent',
+    color: 'text-emerald-400',
+    bg: 'from-emerald-500/20 to-transparent',
   },
   {
     icon: Sparkles,
     title: 'Ready?',
     subtitle: 'Start Your Journey',
     description: 'Every recovery journey starts with a single step. Take that step today with Kalasag by your side.',
-    color: 'text-yellow-400',
-    bg: 'from-yellow-500/20 to-transparent',
+    color: 'text-amber-400',
+    bg: 'from-amber-500/20 to-transparent',
   },
 ]
 
@@ -54,10 +54,10 @@ export default function OnboardingPage() {
   const isLast = slide === slides.length - 1
 
   return (
-    <div className="min-h-screen bg-[#020617] flex flex-col relative overflow-hidden">
+    <div className="min-h-screen flex flex-col relative overflow-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
       {/* Animated Background */}
       <div className={`absolute inset-0 bg-gradient-to-b ${current.bg} opacity-50`} />
-      <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/40 via-transparent to-[#020617]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg-primary)]/40 via-transparent to-[var(--bg-primary)]" />
 
       {/* Floating Particles */}
       {[...Array(6)].map((_, i) => (
@@ -69,7 +69,7 @@ export default function OnboardingPage() {
             opacity: [0.2, 0.5, 0.2],
           }}
           transition={{ duration: 4 + i, repeat: Infinity, delay: i * 0.5 }}
-          className="absolute w-2 h-2 rounded-full bg-indigo-400/30"
+          className="absolute w-2 h-2 rounded-full bg-[var(--accent-teal)]/30"
           style={{
             left: `${15 + i * 15}%`,
             top: `${20 + (i % 3) * 25}%`,
@@ -80,7 +80,7 @@ export default function OnboardingPage() {
       <div className="relative z-10 flex-1 flex flex-col px-8">
         {/* Skip */}
         <div className="flex justify-end pt-12">
-          <button onClick={() => navigate('/login')} className="text-[13px] text-[#64748B]">
+          <button onClick={() => navigate('/login')} className="text-[13px]" style={{ color: 'var(--text-muted)' }}>
             Skip
           </button>
         </div>
@@ -101,7 +101,7 @@ export default function OnboardingPage() {
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
-                className="w-24 h-24 rounded-3xl glass-thick flex items-center justify-center specular-highlight mx-auto mb-8"
+                className="w-24 h-24 rounded-3xl dash-card flex items-center justify-center mx-auto mb-8"
               >
                 <current.icon size={40} className={current.color} />
               </motion.div>
@@ -118,9 +118,9 @@ export default function OnboardingPage() {
                 />
               )}
 
-              <h2 className="text-[15px] text-indigo-400 font-medium mb-2">{current.subtitle}</h2>
-              <h1 className="text-[32px] font-bold text-white mb-4 leading-tight">{current.title}</h1>
-              <p className="text-[17px] text-[#CBD5E1] leading-relaxed max-w-xs mx-auto">
+              <h2 className="text-[15px] font-medium mb-2" style={{ color: 'var(--accent-teal)' }}>{current.subtitle}</h2>
+              <h1 className="text-[32px] font-bold mb-4 leading-tight" style={{ color: 'var(--text-primary)' }}>{current.title}</h1>
+              <p className="text-[17px] leading-relaxed max-w-xs mx-auto" style={{ color: 'var(--text-secondary)' }}>
                 {current.description}
               </p>
             </motion.div>
@@ -136,7 +136,7 @@ export default function OnboardingPage() {
                 key={i}
                 onClick={() => setSlide(i)}
                 className={`h-2 rounded-full transition-all ${
-                  i === slide ? 'w-8 bg-[#4338CA]' : 'w-2 bg-[#1E293B]'
+                  i === slide ? 'w-8 bg-[var(--accent-teal)]' : 'w-2 bg-[var(--border-subtle)]'
                 }`}
               />
             ))}
@@ -146,12 +146,12 @@ export default function OnboardingPage() {
           <motion.button
             whileTap={{ scale: 0.96 }}
             onClick={() => isLast ? navigate('/login') : setSlide(s => s + 1)}
-            className="w-full glass-thick rounded-2xl py-4 specular-highlight glass-interactive flex items-center justify-center gap-2"
+            className="w-full dash-card rounded-2xl py-4 dash-interactive flex items-center justify-center gap-2"
           >
-            <span className="text-[17px] font-semibold text-white">
+            <span className="text-[17px] font-semibold" style={{ color: 'var(--text-primary)' }}>
               {isLast ? 'Get Started' : 'Continue'}
             </span>
-            <ChevronRight size={20} className="text-white" />
+            <ChevronRight size={20} style={{ color: 'var(--text-primary)' }} />
           </motion.button>
         </div>
       </div>

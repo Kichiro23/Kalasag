@@ -271,12 +271,7 @@ export default function StoriesPage() {
       else next.add(id);
       return next;
     });
-    setStories(prev => prev.map(s => {
-      if (s.id !== id) return s;
-      const isLiked = likedStories.has(id);
-      return { ...s, likes: isLiked ? s.likes - 1 : s.likes + 1 };
-    }));
-  }, [likedStories]);
+  }, []);
 
   const handleShare = (story: Story) => {
     const text = `${story.title} - Shared from Kalasag`;

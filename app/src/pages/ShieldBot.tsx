@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Send, Bot, User, Shield } from 'lucide-react'
+import DashboardLayout from '@/components/dashboard/DashboardLayout'
 
 interface Message {
   id: string
@@ -106,27 +107,24 @@ export default function ShieldBot() {
   }
 
   return (
-    <div className="min-h-screen bg-[#020617] flex flex-col">
-      {/* Background */}
-      <div className="fixed inset-0 bg-gradient-to-b from-indigo-950/30 via-[#020617] to-[#020617]" />
-
-      <div className="relative z-10 flex flex-col h-screen">
+    <DashboardLayout showNav={false}>
+      <div className="flex flex-col h-[calc(100vh-48px)]">
         {/* Header */}
-        <div className="flex items-center gap-3 px-5 pt-12 pb-4 shrink-0">
-          <button onClick={() => navigate('/dashboard')} className="w-10 h-10 rounded-full glass-base flex items-center justify-center specular-highlight">
-            <ArrowLeft size={20} className="text-white" />
+        <div className="flex items-center gap-3 pb-4 shrink-0">
+          <button onClick={() => navigate('/dashboard')} className="w-10 h-10 rounded-full dash-card flex items-center justify-center dash-interactive">
+            <ArrowLeft size={20} style={{ color: 'var(--text-primary)' }} />
           </button>
-          <div className="w-10 h-10 rounded-full glass-base flex items-center justify-center specular-highlight">
-            <Shield size={20} className="text-indigo-400" />
+          <div className="w-10 h-10 rounded-full dash-card flex items-center justify-center">
+            <Shield size={20} className="text-[var(--accent-teal)]" />
           </div>
           <div>
-            <h1 className="text-[17px] font-semibold text-white">Shield Bot</h1>
-            <p className="text-[12px] text-[#64748B]">CBT Companion</p>
+            <h1 className="text-[17px] font-semibold" style={{ color: 'var(--text-primary)' }}>Shield Bot</h1>
+            <p className="text-[12px]" style={{ color: 'var(--text-muted)' }}>CBT Companion</p>
           </div>
         </div>
 
         {/* Messages */}
-        <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 pb-4">
+        <div ref={scrollRef} className="flex-1 overflow-y-auto pb-4 -mx-5 px-5">
           {messages.map((msg, i) => (
             <motion.div
               key={msg.id}
@@ -136,21 +134,23 @@ export default function ShieldBot() {
               className={`flex gap-3 mb-4 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
               {msg.role === 'bot' && (
-                <div className="w-8 h-8 rounded-full glass-base flex items-center justify-center shrink-0 specular-highlight self-start">
-                  <Bot size={16} className="text-indigo-400" />
+                <div className="w-8 h-8 rounded-full dash-card flex items-center justify-center shrink-0 self-start">
+                  <Bot size={16} className="text-[var(--accent-teal)]" />
                 </div>
               )}
               <div
                 className={`max-w-[75%] rounded-2xl px-4 py-3 ${
                   msg.role === 'user'
-                    ? 'bg-[#4338CA] text-white rounded-br-md'
-                    : 'glass-base text-[#CBD5E1] rounded-bl-md specular-highlight'
+                    ? 'bg-[var(--accent-teal)] text-white rounded-br-md'
+                    : 'dash-card rounded-bl-md'
                 }`}
               >
-                <p className="text-[15px] whitespace-pre-line leading-relaxed">{msg.content}</p>
+                <p className="text-[15px] whitespace-pre-line leading-relaxed" style={{ color: msg.role === 'user' ? 'white' : 'var(--text-secondary)' }}>
+                  {msg.content}
+                </p>
               </div>
               {msg.role === 'user' && (
-                <div className="w-8 h-8 rounded-full bg-[#4338CA] flex items-center justify-center shrink-0 self-start">
+                <div className="w-8 h-8 rounded-full bg-[var(--accent-teal)] flex items-center justify-center shrink-0 self-start">
                   <User size={16} className="text-white" />
                 </div>
               )}
@@ -159,17 +159,17 @@ export default function ShieldBot() {
 
           {isTyping && (
             <div className="flex gap-3 mb-4">
-              <div className="w-8 h-8 rounded-full glass-base flex items-center justify-center specular-highlight">
-                <Bot size={16} className="text-indigo-400" />
+              <div className="w-8 h-8 rounded-full dash-card flex items-center justify-center">
+                <Bot size={16} className="text-[var(--accent-teal)]" />
               </div>
-              <div className="glass-base rounded-2xl rounded-bl-md px-4 py-3 specular-highlight">
+              <div className="dash-card rounded-2xl rounded-bl-md px-4 py-3">
                 <div className="flex gap-1">
                   {[0, 1, 2].map(i => (
                     <motion.div
                       key={i}
                       animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
                       transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
-                      className="w-2 h-2 rounded-full bg-indigo-400"
+                      className="w-2 h-2 rounded-full bg-[var(--accent-teal)]"
                     />
                   ))}
                 </div>
@@ -179,25 +179,26 @@ export default function ShieldBot() {
         </div>
 
         {/* Input */}
-        <div className="shrink-0 px-5 pb-8 pt-2">
-          <div className="glass-thick rounded-full px-4 py-2 flex items-center gap-3 specular-highlight">
+        <div className="shrink-0 pb-4 pt-2 -mx-5 px-5">
+          <div className="dash-card rounded-full px-4 py-2 flex items-center gap-3">
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               placeholder="Type your thoughts..."
-              className="flex-1 bg-transparent text-white text-[15px] placeholder-[#64748B] outline-none"
+              className="flex-1 bg-transparent text-[15px] outline-none placeholder:text-[var(--text-muted)]"
+              style={{ color: 'var(--text-primary)' }}
             />
             <button
               onClick={handleSend}
-              className="w-10 h-10 rounded-full bg-[#4338CA] flex items-center justify-center shrink-0"
+              className="w-10 h-10 rounded-full bg-[var(--accent-teal)] flex items-center justify-center shrink-0 dash-interactive"
             >
               <Send size={18} className="text-white" />
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </DashboardLayout>
   )
 }

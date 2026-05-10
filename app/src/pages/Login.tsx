@@ -12,10 +12,10 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-[#020617] flex flex-col relative overflow-hidden">
+    <div className="min-h-screen flex flex-col relative overflow-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
       {/* Background */}
       <div className="fixed inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: 'url(/assets/bg-aurora.jpg)' }} />
-      <div className="fixed inset-0 bg-gradient-to-b from-[#020617]/80 via-[#020617] to-[#020617]" />
+      <div className="fixed inset-0 bg-gradient-to-b from-[var(--bg-primary)]/80 via-[var(--bg-primary)] to-[var(--bg-primary)]" />
 
       <div className="relative z-10 flex-1 flex flex-col px-8">
         <div className="flex-1 flex flex-col items-center justify-center">
@@ -32,9 +32,9 @@ export default function Login() {
               alt="Kalasag"
               className="w-28 h-28 mx-auto mb-6 object-contain"
             />
-            <h1 className="text-[36px] font-bold text-white mb-2">Kalasag</h1>
-            <p className="text-[15px] text-[#64748B] mb-2">Your Digital Shield</p>
-            <p className="text-[13px] text-[#64748B]">Laban sa sugal. Lakas ng pamilya.</p>
+            <h1 className="text-[36px] font-bold mb-2" style={{ color: 'var(--text-primary)' }}>Kalasag</h1>
+            <p className="text-[15px] mb-2" style={{ color: 'var(--text-muted)' }}>Your Digital Shield</p>
+            <p className="text-[13px]" style={{ color: 'var(--text-muted)' }}>Laban sa sugal. Lakas ng pamilya.</p>
           </motion.div>
         </div>
 
@@ -45,10 +45,10 @@ export default function Login() {
             transition={{ delay: 0.3 }}
             whileTap={{ scale: 0.96 }}
             onClick={handleLogin}
-            className="w-full glass-thick rounded-2xl py-4 specular-highlight glass-interactive flex items-center justify-center gap-3"
+            className="w-full dash-card rounded-2xl py-4 dash-interactive flex items-center justify-center gap-3"
           >
-            <Shield size={20} className="text-indigo-400" />
-            <span className="text-[17px] font-semibold text-white">Login with Kalasag</span>
+            <Shield size={20} className="text-[var(--accent-teal)]" />
+            <span className="text-[17px] font-semibold" style={{ color: 'var(--text-primary)' }}>Login with Kalasag</span>
           </motion.button>
 
           <motion.button
@@ -57,13 +57,13 @@ export default function Login() {
             transition={{ delay: 0.4 }}
             whileTap={{ scale: 0.96 }}
             onClick={() => navigate('/dashboard')}
-            className="w-full glass-base rounded-2xl py-4 specular-highlight glass-interactive flex items-center justify-center gap-3"
+            className="w-full dash-card rounded-2xl py-4 dash-interactive flex items-center justify-center gap-3"
           >
-            <LogIn size={18} className="text-[#64748B]" />
-            <span className="text-[15px] text-[#CBD5E1]">Continue as Guest</span>
+            <LogIn size={18} style={{ color: 'var(--text-muted)' }} />
+            <span className="text-[15px]" style={{ color: 'var(--text-secondary)' }}>Continue as Guest</span>
           </motion.button>
 
-          <p className="text-center text-[12px] text-[#64748B] pt-2">
+          <p className="text-center text-[12px] pt-2" style={{ color: 'var(--text-muted)' }}>
             By continuing, you agree to our Terms and Privacy Policy
           </p>
         </div>

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, Sun, Moon, CheckCircle, Smile, Frown, Meh } from 'lucide-react'
 import { trpc } from '@/providers/trpc'
+import DashboardLayout from '@/components/dashboard/DashboardLayout'
 
 const questions = [
   { id: 'mood', text: 'How are you feeling right now?', type: 'mood' as const },
@@ -26,7 +27,6 @@ export default function DailyCheckPage() {
     if (step < questions.length - 1) {
       setStep(s => s + 1)
     } else {
-      // Submit
       logCheck.mutate({
         type,
         moodRating: Number(answers.mood ?? 5),
@@ -54,42 +54,40 @@ export default function DailyCheckPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#020617] flex flex-col">
-      <div className="fixed inset-0 bg-gradient-to-b from-indigo-950/30 via-[#020617] to-[#020617]" />
-
-      <div className="relative z-10 flex flex-col h-screen">
-        <div className="flex items-center gap-3 px-5 pt-12 pb-4">
-          <button onClick={() => navigate('/dashboard')} className="w-10 h-10 rounded-full glass-base flex items-center justify-center specular-highlight">
-            <ArrowLeft size={20} className="text-white" />
+    <DashboardLayout showNav={false}>
+      <div className="flex flex-col h-[calc(100vh-48px)]">
+        <div className="flex items-center gap-3 pb-4">
+          <button onClick={() => navigate('/dashboard')} className="w-10 h-10 rounded-full dash-card flex items-center justify-center dash-interactive">
+            <ArrowLeft size={20} style={{ color: 'var(--text-primary)' }} />
           </button>
-          <h1 className="text-[22px] font-bold text-white">Daily Check</h1>
+          <h1 className="text-[22px] font-bold" style={{ color: 'var(--text-primary)' }}>Daily Check</h1>
         </div>
 
         {/* Type Toggle */}
         {!completed && (
-          <div className="px-5 mb-6 flex gap-2">
+          <div className="mb-6 flex gap-2">
             <button
               onClick={() => setType('morning')}
               className={`flex-1 rounded-2xl py-3 flex items-center justify-center gap-2 ${
-                type === 'morning' ? 'bg-[#4338CA]' : 'glass-base'
+                type === 'morning' ? 'bg-[var(--accent-teal)]' : 'dash-card'
               }`}
             >
-              <Sun size={18} className={type === 'morning' ? 'text-white' : 'text-[#64748B]'} />
-              <span className={type === 'morning' ? 'text-white font-medium' : 'text-[#64748B]'}>Morning</span>
+              <Sun size={18} className={type === 'morning' ? 'text-white' : ''} style={type !== 'morning' ? { color: 'var(--text-muted)' } : undefined} />
+              <span className={type === 'morning' ? 'text-white font-medium' : ''} style={type !== 'morning' ? { color: 'var(--text-muted)' } : undefined}>Morning</span>
             </button>
             <button
               onClick={() => setType('evening')}
               className={`flex-1 rounded-2xl py-3 flex items-center justify-center gap-2 ${
-                type === 'evening' ? 'bg-[#4338CA]' : 'glass-base'
+                type === 'evening' ? 'bg-[var(--accent-teal)]' : 'dash-card'
               }`}
             >
-              <Moon size={18} className={type === 'evening' ? 'text-white' : 'text-[#64748B]'} />
-              <span className={type === 'evening' ? 'text-white font-medium' : 'text-[#64748B]'}>Evening</span>
+              <Moon size={18} className={type === 'evening' ? 'text-white' : ''} style={type !== 'evening' ? { color: 'var(--text-muted)' } : undefined} />
+              <span className={type === 'evening' ? 'text-white font-medium' : ''} style={type !== 'evening' ? { color: 'var(--text-muted)' } : undefined}>Evening</span>
             </button>
           </div>
         )}
 
-        <div className="flex-1 flex flex-col items-center justify-center px-8">
+        <div className="flex-1 flex flex-col items-center justify-center px-3">
           <AnimatePresence mode="wait">
             {!completed ? (
               <motion.div
@@ -105,20 +103,20 @@ export default function DailyCheckPage() {
                     <div
                       key={i}
                       className={`h-1 rounded-full flex-1 transition-all ${
-                        i <= step ? 'bg-[#4338CA]' : 'bg-[#1E293B]'
+                        i <= step ? 'bg-[var(--accent-teal)]' : 'bg-[var(--border-subtle)]'
                       }`}
                     />
                   ))}
                 </div>
 
-                <h2 className="text-[24px] font-bold text-white text-center mb-8">{currentQ.text}</h2>
+                <h2 className="text-[24px] font-bold text-center mb-8" style={{ color: 'var(--text-primary)' }}>{currentQ.text}</h2>
 
                 {currentQ.type === 'mood' && (
                   <div className="flex justify-center gap-6">
                     {[
                       { icon: Frown, value: 3, label: 'Low', color: 'text-red-400' },
-                      { icon: Meh, value: 6, label: 'Okay', color: 'text-yellow-400' },
-                      { icon: Smile, value: 9, label: 'Good', color: 'text-green-400' },
+                      { icon: Meh, value: 6, label: 'Okay', color: 'text-amber-400' },
+                      { icon: Smile, value: 9, label: 'Good', color: 'text-emerald-400' },
                     ].map(item => (
                       <motion.button
                         key={item.value}
@@ -126,10 +124,10 @@ export default function DailyCheckPage() {
                         onClick={() => handleAnswer(item.value)}
                         className="flex flex-col items-center gap-2"
                       >
-                        <div className="w-16 h-16 rounded-full glass-base flex items-center justify-center specular-highlight glass-interactive">
+                        <div className="w-16 h-16 rounded-full dash-card flex items-center justify-center dash-interactive">
                           <item.icon size={28} className={item.color} />
                         </div>
-                        <span className="text-[13px] text-[#64748B]">{item.label}</span>
+                        <span className="text-[13px]" style={{ color: 'var(--text-muted)' }}>{item.label}</span>
                       </motion.button>
                     ))}
                   </div>
@@ -138,18 +136,18 @@ export default function DailyCheckPage() {
                 {currentQ.type === 'urge' && (
                   <div className="space-y-3">
                     {[
-                      { label: 'No urges at all', value: 0, color: 'glass-green' },
-                      { label: 'A little tempted', value: 3, color: 'glass-base' },
-                      { label: 'Moderate urge', value: 6, color: 'glass-base' },
-                      { label: 'Strong urge', value: 9, color: 'glass-red' },
+                      { label: 'No urges at all', value: 0, color: 'dash-card-success' },
+                      { label: 'A little tempted', value: 3, color: 'dash-card' },
+                      { label: 'Moderate urge', value: 6, color: 'dash-card' },
+                      { label: 'Strong urge', value: 9, color: 'dash-card-danger' },
                     ].map(item => (
                       <motion.button
                         key={item.value}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => handleAnswer(item.value)}
-                        className={`w-full ${item.color} rounded-2xl p-4 specular-highlight glass-interactive text-left`}
+                        className={`w-full ${item.color} rounded-2xl p-4 dash-interactive text-left`}
                       >
-                        <span className="text-[15px] text-white font-medium">{item.label}</span>
+                        <span className="text-[15px] font-medium" style={{ color: 'var(--text-primary)' }}>{item.label}</span>
                       </motion.button>
                     ))}
                   </div>
@@ -161,11 +159,13 @@ export default function DailyCheckPage() {
                       placeholder="Type your answer..."
                       value={String(answers[currentQ.id] ?? '')}
                       onChange={e => setAnswers(a => ({ ...a, [currentQ.id]: e.target.value }))}
-                      className="w-full glass-base rounded-2xl p-4 text-white placeholder-[#64748B] outline-none specular-highlight h-32 resize-none text-[15px]"
+                      className="w-full dash-card rounded-2xl p-4 outline-none h-32 resize-none text-[15px] placeholder:text-[var(--text-muted)]"
+                      style={{ color: 'var(--text-primary)' }}
                     />
                     <button
                       onClick={handleTextSubmit}
-                      className="w-full glass-base rounded-2xl py-4 specular-highlight glass-interactive text-[17px] font-semibold text-white"
+                      className="w-full dash-card rounded-2xl py-4 dash-interactive text-[17px] font-semibold"
+                      style={{ color: 'var(--text-primary)' }}
                     >
                       Continue
                     </button>
@@ -181,16 +181,17 @@ export default function DailyCheckPage() {
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 1 }}
-                  className="w-24 h-24 rounded-full glass-green flex items-center justify-center specular-highlight mx-auto mb-6"
+                  className="w-24 h-24 rounded-full dash-card-success flex items-center justify-center mx-auto mb-6"
                 >
-                  <CheckCircle size={48} className="text-green-400" />
+                  <CheckCircle size={48} className="text-emerald-400" />
                 </motion.div>
-                <h2 className="text-[28px] font-bold text-white mb-2">Check Complete!</h2>
-                <p className="text-[15px] text-[#CBD5E1] mb-2">Great job keeping track.</p>
-                <p className="text-[22px] font-bold text-yellow-400">+25 pts</p>
+                <h2 className="text-[28px] font-bold mb-2" style={{ color: 'var(--text-primary)' }}>Check Complete!</h2>
+                <p className="text-[15px] mb-2" style={{ color: 'var(--text-secondary)' }}>Great job keeping track.</p>
+                <p className="text-[22px] font-bold text-amber-400">+25 pts</p>
                 <button
                   onClick={() => navigate('/dashboard')}
-                  className="mt-6 glass-base rounded-full px-8 py-3 text-white font-medium specular-highlight glass-interactive"
+                  className="mt-6 dash-card rounded-full px-8 py-3 font-medium dash-interactive"
+                  style={{ color: 'var(--text-primary)' }}
                 >
                   Back to Dashboard
                 </button>
@@ -199,6 +200,6 @@ export default function DailyCheckPage() {
           </AnimatePresence>
         </div>
       </div>
-    </div>
+    </DashboardLayout>
   )
 }
