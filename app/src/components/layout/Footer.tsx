@@ -15,13 +15,14 @@ import { content } from '@/i18n/content';
 
 const currentYear = new Date().getFullYear();
 
-const quickLinks = [
-  { label: 'Get Help', to: '/get-help' },
-  { label: 'Resources', to: '/resources' },
-  { label: 'Self-Exclusion', to: '/self-exclusion' },
-  { label: 'About', to: '/about' },
-  { label: 'Contact', to: '/contact' },
-  { label: 'Dashboard', to: '/dashboard-access' },
+const quickLinkKeys: { key: keyof typeof content.en.nav; to: string }[] = [
+  { key: 'getHelp', to: '/get-help' },
+  { key: 'resources', to: '/resources' },
+  { key: 'selfExclusion', to: '/self-exclusion' },
+  { key: 'about', to: '/about' },
+  { key: 'contact', to: '/contact' },
+  { key: 'dashboard', to: '/dashboard-access' },
+  { key: 'login', to: '/login' },
 ];
 
 const crisisHotlines = [
@@ -81,13 +82,13 @@ export default function Footer() {
               {t.footer.quickLinks}
             </h3>
             <ul className="space-y-1.5">
-              {quickLinks.map((link) => (
+              {quickLinkKeys.map((link) => (
                 <li key={link.to}>
                   <Link
                     to={link.to}
                     className="text-xs text-[var(--text-secondary)] hover:text-[var(--accent-teal)] transition-colors"
                   >
-                    {link.label}
+                    {t.nav[link.key]}
                   </Link>
                 </li>
               ))}

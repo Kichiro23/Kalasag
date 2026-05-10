@@ -93,6 +93,12 @@ export default function Navbar() {
               {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
             <Link
+              to="/login"
+              className="hidden sm:inline-flex items-center px-3 py-2 rounded-full text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-solid)] transition-all"
+            >
+              {t.nav.login}
+            </Link>
+            <Link
               to="/dashboard"
               className="hidden sm:inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold text-white bg-[var(--accent-teal)] hover:brightness-110 transition-all"
             >
@@ -155,7 +161,14 @@ export default function Navbar() {
                     </Link>
                   ))}
                 </div>
-                <div className="mt-6 px-3">
+                <div className="mt-6 px-3 space-y-2">
+                  <Link
+                    to="/login"
+                    onClick={() => setMobileOpen(false)}
+                    className="block w-full text-center px-4 py-3 rounded-full text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface-solid)] transition-all border border-[var(--border-subtle)]"
+                  >
+                    {t.nav.login}
+                  </Link>
                   <Link
                     to="/dashboard"
                     onClick={() => setMobileOpen(false)}

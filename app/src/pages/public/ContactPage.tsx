@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Mail,
   Phone,
@@ -17,11 +17,20 @@ import {
   Instagram,
   Facebook,
   MessageCircle,
+  MessageSquare,
+  Trash2,
 } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
 import { useLanguage } from '@/providers/LanguageProvider';
 import { content } from '@/i18n/content';
 import { usePageTitle } from '@/hooks/usePageTitle';
+
+interface StoredMessage {
+  id: string;
+  type: string;
+  message: string;
+  date: string;
+}
 
 const socialLinks = [
   { icon: Github, href: 'https://github.com/Kichiro23', label: 'GitHub' },
@@ -72,22 +81,68 @@ function CopyButton({ text, copiedText }: { text: string; copiedText: string }) 
   );
 }
 
+const STORAGE_KEY = 'kalasag_contact_messages';
+
+function loadMessages(): StoredMessage[] {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveMessages(msgs: StoredMessage[]) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(msgs));
+  } catch {
+    // ignore
+  }
+}
+
 export default function ContactPage() {
   const { lang } = useLanguage();
   const t = content[lang];
   usePageTitle(t.nav.contact);
 
-  const [formType, setFormType] = useState('General feedback');
+  const [formType, setFormType] = useState(t.contact.form.types[0]);
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [honeypot, setHoneypot] = useState('');
+  const [storedMessages, setStoredMessages] = useState<StoredMessage[]>(loadMessages);
   const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    setFormType(t.contact.form.types[0]);
+  }, [lang, t.contact.form.types]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (honeypot) return;
+
+    const newMsg: StoredMessage = {
+      id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+      type: formType,
+      message: message.trim(),
+      date: new Date().toISOString(),
+    };
+
+    const updated = [newMsg, ...storedMessages].slice(0, 50);
+    setStoredMessages(updated);
+    saveMessages(updated);
     setSubmitted(true);
     setMessage('');
+  };
+
+  const handleDelete = (id: string) => {
+    const updated = storedMessages.filter((m) => m.id !== id);
+    setStoredMessages(updated);
+    saveMessages(updated);
+  };
+
+  const handleSendAnother = () => {
+    setSubmitted(false);
+    setFormType(t.contact.form.types[0]);
   };
 
   return (
@@ -272,7 +327,14 @@ export default function ContactPage() {
             {submitted ? (
               <div className="text-center py-10">
                 <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-3" />
-                <p className="text-base font-medium text-[var(--text-primary)]">{t.contact.form.success}</p>
+                <p className="text-base font-medium text-[var(--text-primary)] mb-4">{t.contact.form.success}</p>
+                <button
+                  type="button"
+                  onClick={handleSendAnother}
+                  className="text-sm text-[var(--accent-teal)] hover:underline"
+                >
+                  {t.contact.form.submit} — {t.contact.form.messageLabel}
+                </button>
               </div>
             ) : (
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
@@ -309,6 +371,50 @@ export default function ContactPage() {
                   {t.contact.form.submit}
                 </button>
               </form>
+            )}
+
+            {/* Previous Messages */}
+            {storedMessages.length > 0 && (
+              <div className="mt-8 pt-8 border-t border-[var(--border-subtle)]">
+                <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-4 flex items-center gap-2">
+                  <MessageSquare className="w-4 h-4 text-[var(--accent-teal)]" />
+                  {t.contact.form.previous}
+                </h3>
+                <div className="space-y-3">
+                  <AnimatePresence>
+                    {storedMessages.map((msg) => (
+                      <motion.div
+                        key={msg.id}
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="glass-card rounded-xl p-4"
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1">
+                              <span className="text-[10px] uppercase tracking-wider font-medium text-[var(--accent-teal)] bg-[var(--accent-teal)]/10 px-2 py-0.5 rounded-full">
+                                {msg.type}
+                              </span>
+                              <span className="text-[10px] text-[var(--text-muted)]">
+                                {new Date(msg.date).toLocaleDateString(lang === 'fil' ? 'fil-PH' : 'en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                              </span>
+                            </div>
+                            <p className="text-sm text-[var(--text-secondary)] whitespace-pre-wrap">{msg.message}</p>
+                          </div>
+                          <button
+                            onClick={() => handleDelete(msg.id)}
+                            className="text-[var(--text-muted)] hover:text-red-400 transition-colors shrink-0"
+                            title="Delete"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
+                </div>
+              </div>
             )}
           </motion.div>
         </div>
