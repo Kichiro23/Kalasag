@@ -1,10 +1,11 @@
-import { useNavigate } from 'react-router'
+import { useNavigate, Link } from 'react-router'
 import { motion } from 'framer-motion'
 import {
   Shield, Zap, BookOpen, TreePine, AlertTriangle,
   BarChart3, Wallet, Ban, Heart,
   ChevronRight, Flame, Trophy,
-  Wind, Brain, Sparkles, LayoutDashboard
+  Wind, Brain, Sparkles, LayoutDashboard,
+  ArrowLeft,
 } from 'lucide-react'
 import Layout from '@/components/layout/Layout'
 import GamblingCalculator from '@/components/dashboard/GamblingCalculator'
@@ -52,6 +53,16 @@ export default function Dashboard() {
           >
             Track your progress, manage urges, and access all your recovery tools in one place. Completely anonymous — no account required.
           </motion.p>
+        </div>
+      </section>
+
+      {/* Back Button */}
+      <section className="px-4 sm:px-6 lg:px-8 pb-4">
+        <div className="max-w-[1200px] mx-auto">
+          <Link to="/" className="inline-flex items-center gap-1.5 text-xs text-[var(--text-muted)] hover:text-[var(--accent-teal)] transition-colors">
+            <ArrowLeft className="w-3.5 h-3.5" />
+            Back to Home
+          </Link>
         </div>
       </section>
 
