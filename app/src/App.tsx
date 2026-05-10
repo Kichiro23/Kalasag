@@ -44,6 +44,9 @@ const PrivacyPage = lazy(() => import('./pages/public/PrivacyPage'));
 const TermsPage = lazy(() => import('./pages/public/TermsPage'));
 const SelfAssessmentPage = lazy(() => import('./pages/public/SelfAssessmentPage'));
 const PublicStoriesPage = lazy(() => import('./pages/public/StoriesPage'));
+const SubscribePage = lazy(() => import('./pages/public/SubscribePage'));
+const DonatePage = lazy(() => import('./pages/public/DonatePage'));
+const DashboardAccessPage = lazy(() => import('./pages/public/DashboardAccessPage'));
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -71,6 +74,9 @@ function AnimatedRoutes() {
           <Route path="/terms" element={<Suspense fallback={<PageLoader />}><TermsPage /></Suspense>} />
           <Route path="/self-assessment" element={<Suspense fallback={<PageLoader />}><SelfAssessmentPage /></Suspense>} />
           <Route path="/stories" element={<Suspense fallback={<PageLoader />}><PublicStoriesPage /></Suspense>} />
+          <Route path="/subscribe" element={<Suspense fallback={<PageLoader />}><SubscribePage /></Suspense>} />
+          <Route path="/donate" element={<Suspense fallback={<PageLoader />}><DonatePage /></Suspense>} />
+          <Route path="/dashboard-access" element={<Suspense fallback={<PageLoader />}><DashboardAccessPage /></Suspense>} />
 
           {/* Preserved existing routes */}
           <Route path="/onboarding" element={<OnboardingPage />} />
