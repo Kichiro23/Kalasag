@@ -334,10 +334,10 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <button className="btn-primary animate-breathe">
+            <Link to="/subscribe" className="btn-primary animate-breathe inline-flex">
               {t.home.pricing.cta}
               <ArrowRight className="w-5 h-5" />
-            </button>
+            </Link>
             <p className="text-xs text-[var(--text-muted)] mt-4">
               {t.home.pricing.guarantee}
             </p>

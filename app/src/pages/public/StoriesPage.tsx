@@ -273,12 +273,12 @@ export default function StoriesPage() {
     });
   }, []);
 
-  const handleShare = (story: Story) => {
+  const handleShare = async (story: Story) => {
     const text = `${story.title} - Shared from Kalasag`;
     if (navigator.share) {
-      navigator.share({ title: story.title, text, url: window.location.href });
+      try { await navigator.share({ title: story.title, text, url: window.location.href }); } catch { /* user cancelled */ }
     } else {
-      navigator.clipboard.writeText(`${text}\n${window.location.href}`);
+      try { await navigator.clipboard.writeText(`${text}\n${window.location.href}`); } catch { /* unsupported */ }
     }
   };
 
@@ -363,7 +363,11 @@ export default function StoriesPage() {
                 viewport={{ once: true, amount: 0.3 }}
                 transition={{ duration: 0.5, delay: i * 0.05 }}
                 onClick={() => setSelectedStory(story)}
-                className="glass-card rounded-3xl p-6 flex flex-col cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:border-[var(--accent-teal)]/30 transition-all duration-300 group"
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelectedStory(story); } }}
+                tabIndex={0}
+                role="button"
+                aria-label={`Read story: ${story.title}`}
+                className="glass-card rounded-3xl p-6 flex flex-col cursor-pointer hover:scale-[1.02] hover:shadow-xl hover:border-[var(--accent-teal)]/30 transition-all duration-300 group focus:outline-none focus:ring-2 focus:ring-[var(--accent-teal)]/50"
               >
                 <div className="flex items-center gap-2 mb-3">
                   <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-[var(--accent-teal)]/10 text-[var(--accent-teal)]">{story.category}</span>

@@ -81,10 +81,17 @@ export default function ShieldBot() {
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' })
   }, [messages, isTyping])
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    }
+  }, [])
 
   const sendMessage = (text: string) => {
     if (!text.trim()) return
@@ -101,7 +108,7 @@ export default function ShieldBot() {
     setIsTyping(true)
 
     // Simulate AI thinking time
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       const response = getAIResponse(text)
       const botMsg: Message = {
         id: (Date.now() + 1).toString(),

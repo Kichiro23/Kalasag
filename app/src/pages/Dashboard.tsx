@@ -21,6 +21,12 @@ const quickActions = [
   { icon: Ban, label: 'Blocker', path: '/dashboard/blocker', color: 'border-orange-500/20 bg-orange-500/5', iconColor: 'text-orange-400' },
 ]
 
+const newTools = [
+  { icon: AlertTriangle, label: 'Panic Mode', path: '/panic-mode', color: 'border-red-500/20 bg-red-500/5', iconColor: 'text-red-400' },
+  { icon: BookOpen, label: 'Journal', path: '/journal', color: 'border-purple-500/20 bg-purple-500/5', iconColor: 'text-purple-400' },
+  { icon: Zap, label: 'Urge Logger', path: '/urge-logger', color: 'border-amber-500/20 bg-amber-500/5', iconColor: 'text-amber-400' },
+]
+
 export default function Dashboard() {
   const navigate = useNavigate()
 
@@ -127,6 +133,28 @@ export default function Dashboard() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: 0.3 + i * 0.05 }}
+                onClick={() => navigate(action.path)}
+                className={`glass-card border ${action.color} rounded-2xl p-4 dash-interactive text-left`}
+              >
+                <action.icon size={20} className={`${action.iconColor} mb-2`} />
+                <div className="text-sm font-semibold text-[var(--text-primary)]">{action.label}</div>
+              </motion.button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* New Tools */}
+      <section className="px-4 sm:px-6 lg:px-8 py-4">
+        <div className="max-w-[1200px] mx-auto">
+          <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">New Tools</h3>
+          <div className="grid grid-cols-3 gap-3">
+            {newTools.map((action, i) => (
+              <motion.button
+                key={action.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.5 + i * 0.05 }}
                 onClick={() => navigate(action.path)}
                 className={`glass-card border ${action.color} rounded-2xl p-4 dash-interactive text-left`}
               >

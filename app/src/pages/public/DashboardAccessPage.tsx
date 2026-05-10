@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import { motion } from 'framer-motion';
 import { ArrowRight, Flame, BookOpen, Zap, TrendingUp, Phone, Users, Brain, Shield, Wallet, BarChart3 } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
@@ -39,10 +40,10 @@ export default function DashboardAccessPage() {
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }} className="text-base md:text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed mb-8">
             {t.dashboardAccess.hero.description}
           </motion.p>
-          <motion.a href="/dashboard" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.5 }} className="btn-primary inline-flex items-center gap-2 text-sm px-8 py-4 text-base">
+          <Link to="/dashboard" className="btn-primary inline-flex items-center gap-2 text-sm px-8 py-4 text-base">
             {t.dashboardAccess.cta}
             <ArrowRight className="w-4 h-4" />
-          </motion.a>
+          </Link>
         </div>
       </section>
 
@@ -82,10 +83,10 @@ export default function DashboardAccessPage() {
                 <p className="text-xs text-[var(--text-muted)]">Saved</p>
               </div>
             </div>
-            <a href="/dashboard" className="btn-primary inline-flex items-center gap-2 text-sm">
+            <Link to="/dashboard" className="btn-primary inline-flex items-center gap-2 text-sm">
               {t.dashboardAccess.cta}
               <ArrowRight className="w-4 h-4" />
-            </a>
+            </Link>
           </motion.div>
         </div>
       </section>

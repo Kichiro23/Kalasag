@@ -16,6 +16,7 @@ import { content } from '@/i18n/content';
 const navLinks = [
   { path: '/', key: 'home' },
   { path: '/get-help', key: 'getHelp' },
+  { path: '/self-exclusion', key: 'selfExclusion' },
   { path: '/resources', key: 'resources' },
   { path: '/recovery-tools', key: 'recoveryTools' },
   { path: '/stories', key: 'stories' },

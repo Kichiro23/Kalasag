@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router';
 import { motion } from 'framer-motion';
 import { Mail, Bell, CheckCircle, BookOpen, Users, Shield, Sparkles, ArrowRight, Check } from 'lucide-react';
 import Layout from '@/components/layout/Layout';
@@ -102,13 +103,16 @@ export default function SubscribePage() {
                     </li>
                   ))}
                 </ul>
-                <button className={`w-full h-10 rounded-xl text-sm font-medium transition-colors ${
-                  tier.highlighted
-                    ? 'bg-[var(--accent-teal)] text-white hover:opacity-90'
-                    : 'border border-[var(--border-subtle)] text-[var(--text-primary)] hover:border-[var(--accent-teal)] hover:text-[var(--accent-teal)]'
-                }`}>
+                <Link
+                  to={tier.name === 'Free' ? '/dashboard-access' : '/donate'}
+                  className={`w-full h-10 rounded-xl text-sm font-medium transition-colors flex items-center justify-center ${
+                    tier.highlighted
+                      ? 'bg-[var(--accent-teal)] text-white hover:opacity-90'
+                      : 'border border-[var(--border-subtle)] text-[var(--text-primary)] hover:border-[var(--accent-teal)] hover:text-[var(--accent-teal)]'
+                  }`}
+                >
                   {tier.cta}
-                </button>
+                </Link>
               </motion.div>
             ))}
           </div>

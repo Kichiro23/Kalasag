@@ -47,6 +47,9 @@ const PublicStoriesPage = lazy(() => import('./pages/public/StoriesPage'));
 const SubscribePage = lazy(() => import('./pages/public/SubscribePage'));
 const DonatePage = lazy(() => import('./pages/public/DonatePage'));
 const DashboardAccessPage = lazy(() => import('./pages/public/DashboardAccessPage'));
+const PanicModePage = lazy(() => import('./pages/public/PanicModePage'));
+const JournalPage = lazy(() => import('./pages/public/JournalPage'));
+const UrgeLoggerPage = lazy(() => import('./pages/public/UrgeLoggerPage'));
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -77,6 +80,9 @@ function AnimatedRoutes() {
           <Route path="/subscribe" element={<Suspense fallback={<PageLoader />}><SubscribePage /></Suspense>} />
           <Route path="/donate" element={<Suspense fallback={<PageLoader />}><DonatePage /></Suspense>} />
           <Route path="/dashboard-access" element={<Suspense fallback={<PageLoader />}><DashboardAccessPage /></Suspense>} />
+          <Route path="/panic-mode" element={<Suspense fallback={<PageLoader />}><PanicModePage /></Suspense>} />
+          <Route path="/journal" element={<Suspense fallback={<PageLoader />}><JournalPage /></Suspense>} />
+          <Route path="/urge-logger" element={<Suspense fallback={<PageLoader />}><UrgeLoggerPage /></Suspense>} />
 
           {/* Preserved existing routes */}
           <Route path="/onboarding" element={<OnboardingPage />} />
