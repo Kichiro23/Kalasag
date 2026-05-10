@@ -36,7 +36,7 @@ export const content = {
       tagline: 'Your Shield Against Gambling Harm',
       quickLinks: 'Quick Links',
       crisisHotline: 'Crisis Hotline',
-      copyright: '\u00A9 {year} Kalasag. Built with \u2764\uFE0F by Rommel Andrei De Leon \u00B7 Malolos, Bulacan, Philippines',
+      copyright: '\u00A9 {year} Kalasag. Built with \u2764\uFE0F by Rommel Andrei De Leon',
       privacy: 'Privacy Policy',
       terms: 'Terms of Use',
       evidenceBased: 'Evidence-Based',
@@ -203,7 +203,7 @@ export const content = {
     about: {
       hero: { eyebrow: 'About Kalasag', title: 'Built by Someone Who Understands', description: 'Kalasag was born from lived experience. Not from a boardroom. Not from a grant proposal. From the trenches of addiction and the long road to recovery.' },
       mission: { title: 'Our Mission', description: 'To provide accessible, evidence-based, stigma-free recovery tools for anyone affected by gambling. No shame. No judgment. Just real help from someone who truly understands.' },
-      story: { title: 'My Story', description: 'I am Rommel Andrei De Leon, a full-stack developer from Malolos, Bulacan, Philippines. I built Kalasag because I lived through online gambling addiction myself. I know the shame, the debt, the sleepless nights, and the feeling that no one understands. I recovered through the love of my family and the stories of strangers on the internet who shared their battles openly. Their courage inspired me to create this shield \u2014 so no one has to fight alone. This is my promise: Kalasag is built by someone who truly understands.', name: 'Rommel Andrei De Leon', role: 'Full Stack Developer \u00B7 IT & Multimedia Specialist \u00B7 AI Automation Engineer', experience: '5+ years', location: 'Malolos, Bulacan, Philippines' },
+      story: { title: 'My Story', description: 'I am Rommel Andrei De Leon, a full-stack developer. I built Kalasag because I lived through online gambling addiction myself. I know the shame, the debt, the sleepless nights, and the feeling that no one understands. I recovered through the love of my family and the stories of strangers on the internet who shared their battles openly. Their courage inspired me to create this shield \u2014 so no one has to fight alone. This is my promise: Kalasag is built by someone who truly understands.', name: 'Rommel Andrei De Leon', role: 'Full Stack Developer \u00B7 IT & Multimedia Specialist \u00B7 AI Automation Engineer', experience: '5+ years', location: '' },
       principles: { title: 'Our Principles', items: ['100% Anonymous', 'Zero Data Retention', 'Evidence-Based', 'Free Core Tools', 'Community First'] },
       partners: { title: 'Our Data Sources', description: 'All statistics are sourced from WHO, GGRAsia, peer-reviewed journals, and government agencies. We do not make up numbers.' },
       nonprofit: { title: 'Sustainable Impact', description: 'Every contribution to Kalasag goes back into building better tools, funding research, and expanding access to recovery resources. Premium features help keep core tools free for everyone.' },
@@ -212,7 +212,7 @@ export const content = {
     contact: {
       hero: { eyebrow: 'Get in Touch', title: 'We\'re Here', description: 'Have feedback, questions, or want to partner? Reach out directly to the developer. Every message is read personally.' },
       form: { title: 'Send a Message', description: 'Anonymous feedback welcome. No email required.', types: ['General feedback', 'Bug report', 'Partnership', 'Press inquiry', 'Feature request'], typeLabel: 'Type', messageLabel: 'Your Message', messagePlaceholder: 'Tell us what\'s on your mind...', submit: 'Send Message', submitting: 'Sending...', success: 'Message sent. Thank you.', honeypot: 'Do not fill this' },
-      developer: { title: 'Developer Contact', description: 'Direct line to Rommel Andrei De Leon, the creator of Kalasag:', email: 'rommeld216@gmail.com', phone: '+63 962 790 5910', location: 'Malolos, Bulacan, Philippines', copy: 'Copy', copied: 'Copied!' },
+      developer: { title: 'Developer Contact', description: 'Direct line to Rommel Andrei De Leon, the creator of Kalasag:', email: 'rommeld216@gmail.com', phone: '+63 962 790 5910', location: '', copy: 'Copy', copied: 'Copied!' },
       payment: { title: 'Support Kalasag', description: 'Your support keeps the lights on and helps us build better tools.', gcash: 'GCash / Maya: 0962 790 5910', paypal: 'PayPal / Google Pay: rommeld216@gmail.com', copy: 'Copy', copied: 'Copied!' },
       social: { title: 'Connect', description: 'Follow the journey and connect with the developer.' },
       bugBounty: { title: 'Bug Bounty', description: 'Found a security issue? Report it and get recognized.', cta: 'Report a Bug' },
